@@ -1,0 +1,16 @@
+{
+  "name": "@idux/setup-theme",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "module": "index.ts",
+  "style": "index.less",
+  "sideEffects": [
+    "*.less"
+  ],
+  "scripts": {
+    "clean": "rimraf dist node_modules"
+  },
+  "dependencies": {}
+}

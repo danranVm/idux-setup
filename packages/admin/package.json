@@ -1,0 +1,14 @@
+{
+  "name": "@idux/setup-admin",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf dist node_modules",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@idux/setup-shared": "workspace:*",
+    "@idux/setup-theme": "workspace:*"
+  }
+}
