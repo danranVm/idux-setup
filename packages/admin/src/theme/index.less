@@ -1,0 +1,139 @@
+/* stylelint-disable color-function-notation */
+/* stylelint-disable function-no-unknown */
+
+@import url('./idux/index.less');
+@import url('./patch/idux.less');
+@import url('./variable/index.less');
+
+html {
+  overflow: hidden;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+
+  &.color-weak {
+    filter: invert(80%);
+  }
+
+  &.gray-mode {
+    filter: grayscale(100%);
+    filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+  }
+}
+
+a:focus,
+a:active,
+button,
+div,
+svg,
+li,
+span {
+  outline: none !important;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0 1000px white inset !important;
+}
+
+:-webkit-autofill {
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+/* 业务通用样式 */
+.alarm-tag {
+    position: relative;
+
+    &::before {
+        content: '';
+        display: inline-block;
+        margin-right: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    &.serious {
+        &::before {
+            background-color: #CF171D;
+        }
+    }
+
+    &.high {
+        &::before {
+            background-color: #FF5752;
+        }
+    }
+
+    &.middle {
+        &::before {
+            background-color: #FF9245;
+        }
+    }
+}
+
+.common-table {
+  padding: 16px 16px 0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgb(30 35 43 / 12%);
+}
+
+.secondary-text-color {
+  color: #6F7785;
+}
+
+.dark-to-light::after {
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    animation: to-light 1s linear 0s forwards;
+    pointer-events: none;
+}
+
+.light-to-dark::after {
+    content: '';
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    animation: to-dark 1s linear 0s forwards;
+    pointer-events: none;
+}
+
+@keyframes to-light {
+    0% {
+        background-color: #000;
+        opacity: 0.7;
+    }
+
+    100% {
+        background-color: #fafafa;
+        opacity: 0;
+    }
+}
+@keyframes to-dark {
+    0% {
+        background-color: #fafafa;
+        opacity: 0.7;
+    }
+
+    100% {
+        background-color: #000;
+        opacity: 0;
+    }
+}

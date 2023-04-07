@@ -7,6 +7,7 @@ import viteComponents from 'unplugin-vue-components/vite'
 import { type Plugin } from 'vite'
 import { chunkSplitPlugin } from 'vite-plugin-chunk-split'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import windiCSS from 'vite-plugin-windicss'
 
 const componentPath: Record<string, string> = {
   CdkClickOutside: '@idux/cdk/click-outside',
@@ -24,6 +25,7 @@ export function createVitePlugins(env: ImportMetaEnv): Plugin[] {
   const plugins = [
     vue(),
     vueJsx(),
+    windiCSS(),
     viteComponents({
       dts: false,
       resolvers: [
@@ -49,13 +51,13 @@ export function createVitePlugins(env: ImportMetaEnv): Plugin[] {
   ]
 
   if (VITE_MOCK_ENABLED) {
-    plugins.push(
-      viteMockServe({
-        ignore: /^_/,
-        mockPath: 'mock',
-        localEnabled: true,
-      }),
-    )
+    // plugins.push(
+    //   viteMockServe({
+    //     ignore: /^_/,
+    //     mockPath: 'mock',
+    //     localEnabled: true,
+    //   }),
+    // )
   }
 
   return plugins as Plugin[]

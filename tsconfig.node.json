@@ -1,14 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": [
-    "scripts/**/.*",
-    "vite.config.*",
-    "vitest.config.*",
-    "cypress.config.*",
-    "playwright.config.*"
-  ],
+  "include": ["typings/*.d.ts", "scripts/**/*.ts", "*.config.ts", "*.config.js"],
   "compilerOptions": {
     "composite": true,
+    "importsNotUsedAsValues": "remove",
     "types": ["node"]
   }
 }

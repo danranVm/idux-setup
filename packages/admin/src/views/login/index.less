@@ -1,0 +1,244 @@
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+
+  .login-banner-wrapper {
+    flex: 1;
+    background-image: url('./assets/login-bg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+
+    .login-banner {
+      position: absolute;
+      right: 680px;
+      bottom: 5%;
+      top: 15%;
+      left: 8%;
+
+      &-header {
+        font-size: 28px;
+        font-weight: 700;
+        color: #3d3d3d;
+        margin-bottom: 16px;
+      }
+
+      &-content {
+        font-size: 16px;
+        line-height: 40px;
+        color: #707a89;
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  .login-box {
+    height: 100%;
+    background-color: #fff;
+    position: relative;
+    box-shadow: 0 1px 6px 1px rgb(0 0 0 / 20%);
+
+    &-header {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      left: 20px;
+      height: 80px;
+      padding-top: 12px;
+      background-color: #fff;
+      z-index: 2;
+
+      .help-box {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+
+        &:hover {
+          background: #e8f0ff;
+        }
+      }
+    }
+
+    &-content {
+      padding: 24% 0 36px;
+      height: 100%;
+      overflow: auto;
+
+      .login-inner-box {
+        width: 300px;
+        margin: 0 auto;
+
+        &-product {
+          &-name {
+            margin-top: 24px;
+            margin-bottom: 8px;
+            font-size: 24px;
+            color: #495060;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        &-form-wrapper {
+          position: relative;
+          margin: 8% auto 70px;
+
+          .login-inner-box-type-radio {
+            padding: 4px;
+            background-color: #eceff3;
+            border-radius: 4px;
+            width: 100%;
+
+            .@{idux-prefix}-space-item {
+              flex: 1;
+              text-align: center;
+            }
+
+            .@{idux-prefix}-button {
+              width: 100%;
+              text-align: center;
+              font-size: 16px;
+              height: 36px;
+              line-height: 36px;
+              min-width: 96px;
+              background-color: #eceff3;
+              color: #5e6573;
+              border: none;
+              border-radius: 2px;
+
+              &::before {
+                content: unset;
+              }
+
+              &:not(:first-child) {
+                margin-left: 4px;
+              }
+
+              &.@{idux-prefix}-radio-checked {
+                background: #fff;
+                color: #1c6eff;
+              }
+            }
+          }
+
+          .phone-input {
+            .@{idux-prefix}-input-addon {
+              border-right: none;
+              background-color: #fff;
+              position: relative;
+
+              &::after {
+                content: '';
+                position: absolute;
+                background-color: #d3d7de;
+                height: 16px;
+                width: 1px;
+                top: 28%;
+                right: 0;
+                transition: all 0.24s cubic-bezier(0.37, 0, 0.63, 1);
+              }
+            }
+
+            .@{idux-prefix}-input-inner {
+              border-left: none;
+            }
+
+            &.@{idux-prefix}-input-invalid {
+              &.@{idux-prefix}-input,
+              &:hover {
+                .@{idux-prefix}-input-addon::after {
+                  background-color: var(--ix-color-red-d10);
+                }
+              }
+            }
+            
+            &.@{idux-prefix}-input-focused,
+            &:hover {
+              .@{idux-prefix}-input-addon::after {
+                height: 100%;
+                top: 0;
+                background-color: #458fff;
+              }
+            }
+          }
+
+          .@{idux-prefix} {
+            &-checkbox {
+              font-size: 14px;
+            }
+
+            &-form-item-message {
+              min-height: 24px;
+            }
+          }
+        }
+      }
+
+      .other-login-wrapper {
+        width: 70%;
+        margin: 24px auto 0;
+
+        .@{idux-prefix} {
+          &-divider-label {
+            color: #a1a7b2;
+          }
+
+          &-row {
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    &-footer {
+      position: absolute;
+      right: 20px;
+      left: 20px;
+      bottom: 0;
+      padding-bottom: 12px;
+      color: #bec3cc;
+      background-color: #fff;
+      text-align: center;
+    }
+  }
+
+  &.sm {
+    .login-box {
+      width: 100%;
+
+      .login-inner-box {
+        width: 450px;
+      }
+    }
+  }
+
+  &.md {
+    .login-box {
+      width: 512px;
+    }
+  }
+
+  &.lg {
+    .login-box {
+      position: absolute;
+      width: 610px;
+      right: 40px;
+      top: 5%;
+      bottom: 5%;
+      height: auto;
+      border-radius: 4px;
+
+      .login-inner-box {
+        width: 60%;
+      }
+    }
+  }
+}

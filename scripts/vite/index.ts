@@ -1,1 +1,2 @@
-export { convertViteEnv } from './utils'
+export * from './plugin'
+export * from './utils'

@@ -1,0 +1,83 @@
+ /* stylelint-disable */
+// 暗黑模式颜色变量
+
+:root[class='dark'] {
+  /* 临时覆盖idux变量 */
+  // Primary
+  --ix-color-primary: @color-primary;
+  --ix-color-primary-l50: mix(
+    color(~`colorPalette('@{color-primary}', 20) `),
+    @color-graphite-d40,
+    15%
+  );
+  --ix-color-primary-l30: mix(@color-primary, @color-graphite-d40, 30%);
+  --ix-color-primary-l10: mix(@color-primary, @color-graphite-d40, 65%);
+  --ix-color-primary-d10: mix(
+    color(~`colorPalette('@{color-primary}', -10) `),
+    @color-graphite-d40,
+    90%
+  );
+
+  // Red
+  --ix-color-red: mix(@color-red, @color-graphite-d40, 85%);
+  --ix-color-red-l10: mix(@color-red, @color-graphite-d40, 65%);
+  --ix-color-red-d10: mix(color(~`colorPalette('@{color-red}', -10) `), @color-graphite-d40, 90%);
+
+  // Turquoise
+  --ix-color-turquoise-d10: mix(
+    color(~`colorPalette('@{color-turquoise}', -10) `),
+    @color-graphite-d40,
+    90%
+  );
+  --ix-color-turquoise: mix(@color-turquoise, @color-graphite-d40, 85%);
+
+  // Brown
+  --ix-color-brown-l10: mix(@color-brown, @color-graphite-d40, 65%);
+  --ix-color-brown: mix(@color-red, @color-graphite-d40, 85%);
+
+  --ix-text-color: fade(@color-white, 85%); // 默认文字颜色
+  --ix-text-color-inverse: @color-graphite-d40; // 反向
+  --ix-text-color-disabled: @color-graphite; // 禁用
+  --ix-text-color-inverse-disabled: @color-graphite-d10; // 反向禁用
+  --ix-text-color-info: @color-graphite-l10; // 提示
+  --ix-text-color-secondary: @color-graphite-l20; // 辅助
+  --ix-text-color-title: fade(@color-white, 85%); // 主标题
+  --ix-text-color-title-secondary: @color-graphite-l30; // 次级标题
+
+  // Background
+  --ix-background-color: @color-graphite-d40; // 默认背景色
+  --ix-background-color-inverse: @color-white; // 反向
+  --ix-background-color-deep: @color-graphite-d30; // 3 级, 禁用
+  --ix-background-color-medium: @color-graphite-d40; // 2 级, 强调
+  --ix-background-color-light: @color-graphite-d50; // 1 级, 悬浮
+
+  // Border
+  --ix-border-color: @color-white; // 默认边框颜色
+  --ix-border-color-inverse: @color-graphite-d20; // 反向
+  --ix-border-color-secondary: @color-graphite-d30; // 次级
+
+  // TODO: fix
+  .@{idux-prefix}-menu {
+    // Text
+    --ix-text-color: @color-graphite-d40; // 默认文字颜色
+    --ix-text-color-inverse: @color-white; // 反向
+    --ix-text-color-disabled: @color-graphite; // 禁用
+    --ix-text-color-inverse-disabled: @color-graphite-l10; // 反向禁用
+    --ix-text-color-info: @color-graphite-d10; // 提示
+    --ix-text-color-secondary: @color-graphite-d20; // 辅助
+    --ix-text-color-title: @color-graphite-d40; // 主标题
+    --ix-text-color-title-secondary: @color-graphite-d30; // 次级标题
+
+    // Background
+    --ix-background-color: @color-white; // 默认背景色
+    --ix-background-color-inverse: @color-graphite-d40; // 反向
+    --ix-background-color-deep: @color-graphite-l30; // 3 级, 禁用
+    --ix-background-color-medium: @color-graphite-l40; // 2 级, 强调
+    --ix-background-color-light: @color-graphite-l50; // 1 级, 悬浮
+
+    // Border
+    --ix-border-color: @color-graphite-l20; // 默认边框颜色
+    --ix-border-color-inverse: @color-white; // 反向
+    --ix-border-color-secondary: @color-graphite-l30; // 次级
+  }
+}

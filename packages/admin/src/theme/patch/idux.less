@@ -1,0 +1,68 @@
+// 用于覆盖 idux 的样式
+.@{idux-prefix} {
+  // TODO: 重构 statistic 组件
+  &-statistic {
+    &-title {
+      margin-bottom: 4px;
+      color: #6f7785;
+    }
+
+    &-content {
+      &-value {
+        font-size: 32px;
+        color: var(--ix-text-color);
+      }
+
+      &-suffix {
+        color: #6f7785;
+      }
+    }
+  }
+}
+
+// TODO 临时处理
+:root[class='dark'] {
+  .@{idux-prefix} {
+    &-pro-layout {
+      &-header-dark,
+      &-sider-dark {
+        .@{pro-layout-prefix}-logo > a > h1 {
+          color: @color-white;
+        }
+      }
+
+      &-header-dark {
+        color: @color-white;
+        background-color: @color-graphite-d40;
+      }
+
+      &-sider-dark {
+        color: @color-white;
+        background-color: @color-graphite-d40;
+
+        .@{layout-prefix}-sider-trigger {
+          > .@{button-prefix} {
+            color: @color-white;
+            background-color: if(@theme = seer, @color-graphite-d30, @color-grey-d30);
+
+            &:hover {
+              color: @color-white;
+              background-color: @color-graphite-d30;
+            }
+          }
+        }
+      }
+    }
+
+    &-selector-content,
+    &-select-overlay,
+    &-select-option,
+    &-pro-search-input-container,
+    &-pro-search-search-item-tag,
+    &-tree,
+    &-trigger {
+      background-color: @color-graphite-d40;
+      color: @color-white;
+    }
+  }
+}

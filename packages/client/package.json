@@ -9,6 +9,21 @@
   },
   "dependencies": {
     "@idux/setup-shared": "workspace:*",
-    "@idux/setup-theme": "workspace:*"
+    "@idux/setup-theme": "workspace:*",
+    "@idux/cdk": "^1.5.0",
+    "@idux/components": "^1.5.0",
+    "@idux/pro": "^1.5.0",
+    "@idux/charts": "^0.3.0",
+    "@vueuse/core": "^9.13.0",
+    "axios": "^1.3.5",
+    "axios-retry": "^3.4.0",
+    "date-fns": "^2.29.3",
+    "echarts": "^5.4.0",
+    "lodash-es": "^4.17.0",
+    "pinia": "^2.0.33",
+    "pinia-plugin-persist": "^1.0.0",
+    "query-string": "^8.1.0",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   }
 }

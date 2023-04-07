@@ -1,0 +1,33 @@
+.real-time-table-page {
+  .shortcut-date-picker {
+    .@{idux-prefix}-selector {
+      margin-right: -1px;
+
+      &-focused,
+      &-opened,
+      &:hover {
+        z-index: 2;
+      }
+    }
+  }
+
+  .type {
+    padding: 0 0 0 4px;
+    background-color: #f7f9fc;
+    .@{idux-prefix}-col:last-child {
+      padding: 0 8px;
+      background-color: #edf1f7;
+    }
+  }
+}
+
+:root[class='dark'] {
+  .real-time-table-page {
+    .type {
+      background-color: var(--ix-background-color-deep);
+      .@{idux-prefix}-col:last-child {
+        background-color: var(--ix-background-color-light);
+      }
+    }
+  }
+}

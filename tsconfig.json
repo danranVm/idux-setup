@@ -9,6 +9,12 @@
     },
     {
       "path": "./tsconfig.vitest.json"
+    },
+    {
+      "path": "./packages/admin/tsconfig.json"
+    },
+    {
+      "path": "./packages/client/tsconfig.json"
     }
   ]
 }

@@ -28,7 +28,9 @@ module.exports = {
     'no-debugger': 'error',
 
     'import/no-duplicates': 'error',
+    'import/no-named-as-default': 0,
     'import/no-unused-modules': 'error',
+    'import/no-unresolved': 'off',
     'import/no-unassigned-import': 'error',
     'import/order': [
       'error',
@@ -38,24 +40,17 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
         pathGroups: [
           {
-            pattern: 'vue-demi',
+            pattern: '{vue,@vue/**,vue-router}',
             group: 'external',
-            position: 'before',
-          },
-          {
-            pattern: '{echarts/**,lodash-es}',
-            group: 'internal',
-            position: 'before',
-          },
-          {
-            pattern: '@idux/**',
-            group: 'internal',
             position: 'before',
           },
         ],
         pathGroupsExcludedImportTypes: ['builtin'],
       },
     ],
+
+    'vue/attribute-hyphenation': 'off',
+    'vue/multi-word-component-names': 'off',
 
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -69,7 +64,8 @@ module.exports = {
   ignorePatterns: [
     '.husky',
     '.vscode',
-    'commitlint.config.js',
+    '*.config.js',
+    '*.config.ts',
     'dist',
     'node_modules',
     'public',
