@@ -6,8 +6,7 @@ import { storeToRefs } from 'pinia'
 
 import LayoutSettingPanel from './LayoutSettingPanel.vue'
 
-import { useAppSettingStore } from '@/store/stores/appSetting'
-
+import { useAppSettingStore } from '@/store/modules/appSetting'
 
 const { layoutTheme, setLayoutType, setLayoutTheme } = useAppSettingStore()
 

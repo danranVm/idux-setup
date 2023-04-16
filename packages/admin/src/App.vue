@@ -5,10 +5,11 @@ import { RouterView } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
 import { IduxProviders } from '@/plugins/idux'
-import { useAppSettingStore } from '@/store/stores/appSetting'
+import { useAppSettingStore } from '@/store/modules'
 
-const { setAppTheme } = useAppSettingStore()
-const { appTheme } = storeToRefs(useAppSettingStore())
+const appSettingStore = useAppSettingStore()
+const { appTheme } = storeToRefs(appSettingStore)
+const { setAppTheme } = appSettingStore
 
 onBeforeMount(() => {
   setAppTheme(appTheme.value)

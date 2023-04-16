@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { SelectData } from '@idux/components'
+import { type SelectData } from '@idux/components'
 import { format } from 'date-fns'
-
 
 import { echarts, useEcharts } from '@/plugins/echarts'
 

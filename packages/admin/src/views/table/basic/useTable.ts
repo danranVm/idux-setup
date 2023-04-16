@@ -1,8 +1,7 @@
-import { h, reactive, Ref, ref } from 'vue'
+import { h, reactive, type Ref, ref } from 'vue'
 
-
-import { IxIcon, IxSpace, IxTag, TablePagination } from '@idux/components'
-import { ProTableColumn } from '@idux/pro'
+import { IxIcon, IxSpace, IxTag, type TablePagination } from '@idux/components'
+import { type ProTableColumn } from '@idux/pro'
 import { format } from 'date-fns'
 
 export interface TableData {

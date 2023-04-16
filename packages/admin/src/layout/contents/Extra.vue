@@ -2,12 +2,12 @@
 import { computed, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { MenuClickOptions, useMessage, type MenuData } from '@idux/components'
+import { type MenuClickOptions, useMessage, type MenuData } from '@idux/components'
 import { isObject } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 
-import { useAppSettingStore } from '@/store/stores/appSetting'
-import { useUserStore } from '@/store/stores/user'
+import { useAppSettingStore } from '@/store/modules/appSetting'
+import { useUserStore } from '@/store/modules/user'
 
 const dropdownDataSource: MenuData[] = [
   { type: 'item', key: 'info', label: '个人中心' },

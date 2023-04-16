@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, reactive, onBeforeUnmount } from 'vue'
 
-import { MenuData } from '@idux/components'
+import { type MenuData } from '@idux/components'
 import { useTimeoutPoll } from '@vueuse/core'
 import { format } from 'date-fns'
 import { storeToRefs } from 'pinia'
 
 import { type ECOption, useEcharts } from '@/plugins/echarts'
-import { useAppSettingStore } from '@/store/stores/appSetting'
+import { useAppSettingStore } from '@/store/modules/appSetting'
 
 const { appTheme } = storeToRefs(useAppSettingStore())
 

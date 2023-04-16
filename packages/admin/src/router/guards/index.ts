@@ -2,7 +2,7 @@ import { type Router } from 'vue-router'
 
 import whiteRouteList from './whiteRoutesList'
 
-import { useUserStore } from '@/store/stores/user'
+import { useUserStore } from '@/store/modules/user'
 
 export const createRouterGuards = (router: Router): void => {
   const userStore = useUserStore()
@@ -14,8 +14,6 @@ export const createRouterGuards = (router: Router): void => {
     }
 
     const { token } = userStore
-    // eslint-disable-next-line no-console
-    console.log(token, next)
     if (!token) {
       const redirectLocation = {
         path: '/login',

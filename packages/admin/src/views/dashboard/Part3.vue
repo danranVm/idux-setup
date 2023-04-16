@@ -2,7 +2,7 @@
 import { h } from 'vue'
 
 import { IxButton } from '@idux/components'
-import { ProTableColumn } from '@idux/pro'
+import { type ProTableColumn } from '@idux/pro'
 
 interface Data {
   key: number

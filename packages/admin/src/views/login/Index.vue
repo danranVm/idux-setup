@@ -5,7 +5,7 @@ import { useSharedBreakpoints } from '@idux/cdk/breakpoint'
 
 import Banner from './Banner.vue'
 import Box from './Box.vue'
-import { Config, loginContextToken } from './context'
+import { type Config, loginContextToken } from './context'
 
 const breakpoints = useSharedBreakpoints()
 

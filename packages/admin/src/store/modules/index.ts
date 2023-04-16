@@ -1,4 +1,5 @@
-import { useAppSettingStore } from './appSetting'
+export * from './appSetting'
+export * from './user'
 
 // const allModules = import.meta.globEager('./**/*.ts')
 
@@ -12,6 +13,4 @@ import { useAppSettingStore } from './appSetting'
 //     })
 // })
 
-export default {
-  useAppSettingStore,
-}
+export default {}

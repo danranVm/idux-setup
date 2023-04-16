@@ -3,7 +3,6 @@
   "include": ["typings/*.d.ts", "scripts/**/*.ts", "*.config.ts", "*.config.js"],
   "compilerOptions": {
     "composite": true,
-    "importsNotUsedAsValues": "remove",
     "types": ["node"]
   }
 }

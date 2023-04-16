@@ -1,21 +1,21 @@
 import {
   BarChart,
-  BarSeriesOption,
+  type BarSeriesOption,
   LineChart,
-  LineSeriesOption,
+  type LineSeriesOption,
   PieChart,
-  PieSeriesOption,
+  type PieSeriesOption,
 } from 'echarts/charts'
 import {
   DatasetComponent,
-  DatasetComponentOption,
+  type DatasetComponentOption,
   GridComponent,
-  GridComponentOption,
+  type GridComponentOption,
   LegendComponent,
   TitleComponent,
-  TitleComponentOption,
+  type TitleComponentOption,
   TooltipComponent,
-  TooltipComponentOption,
+  type TooltipComponentOption,
   TransformComponent,
 } from 'echarts/components'
 import * as echarts from 'echarts/core'

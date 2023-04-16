@@ -3,8 +3,8 @@ import { ref, reactive, watch } from 'vue'
 
 import { storeToRefs } from 'pinia'
 
-import { ECOption, useEcharts } from '@/plugins/echarts'
-import { useAppSettingStore } from '@/store/stores/appSetting'
+import { type ECOption, useEcharts } from '@/plugins/echarts'
+import { useAppSettingStore } from '@/store/modules/appSetting'
 
 const { appTheme } = storeToRefs(useAppSettingStore())
 

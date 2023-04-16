@@ -1,7 +1,7 @@
-import { reactive, Ref, ref } from 'vue'
+import { reactive, type Ref, ref } from 'vue'
 
-import { TablePagination } from '@idux/components'
-import { ProTableColumn } from '@idux/pro'
+import { type TablePagination } from '@idux/components'
+import { type ProTableColumn } from '@idux/pro'
 
 export interface TableData {
   key: number

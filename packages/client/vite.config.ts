@@ -14,6 +14,7 @@ export default defineConfig(({ command, mode }) => {
   const { VITE_BASE_URL } = envConfig
   return {
     base: VITE_BASE_URL,
+    envDir,
     plugins: createVitePlugins(envConfig),
     resolve: {
       alias: {
@@ -22,6 +23,13 @@ export default defineConfig(({ command, mode }) => {
     },
     build: {
       target: ['chrome79', 'edge79', 'firefox72', 'safari13'],
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          javascriptEnabled: true,
+        },
+      },
     },
     define: {
       __DEV__: !isBuild,

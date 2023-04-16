@@ -4,14 +4,13 @@ import { useRouter } from 'vue-router'
 
 import { useMessage } from '@idux/components'
 
-
 import BoxFooter from './BoxFooter.vue'
 import BoxHeader from './BoxHeader.vue'
 import MessageForm from './MessageForm.vue'
 import PasswordForm from './PasswordForm.vue'
 import { loginContextToken } from './context'
 
-import { useUserStore } from '@/store/stores/user'
+import { useUserStore } from '@/store/modules/user'
 
 const { boxProductName } = inject(loginContextToken)!
 

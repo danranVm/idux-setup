@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, h, onMounted, ref, shallowRef } from 'vue'
-import { RouteRecordRaw, RouterLink, useRoute, useRouter } from 'vue-router'
+import { type RouteRecordRaw, RouterLink, useRoute, useRouter } from 'vue-router'
 
 import {
   IxIcon,
   IxLayoutSiderTrigger,
-  MenuClickOptions,
+  type MenuClickOptions,
   useLoadingBar,
   type MenuData,
 } from '@idux/components'
@@ -13,15 +13,13 @@ import { IxProLayout } from '@idux/pro'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 
-
 import Extra from './contents/Extra.vue'
 import LayoutSettingDrawer from './contents/LayoutSettingDrawer.vue'
 import Main from './contents/Main.vue'
 
 import routes from '@/router/routes/dashboard'
-import { useAppSettingStore } from '@/store/stores/appSetting'
+import { useAppSettingStore } from '@/store/modules/appSetting'
 import { normalizePath } from '@/utils'
-
 
 const route = useRoute()
 const router = useRouter()

@@ -1,9 +1,11 @@
-import { type DrawerProviderRef } from '@idux/components/drawer'
-import { type LoadingBarProviderRef } from '@idux/components/loading-bar'
-import { type MessageProviderRef } from '@idux/components/message'
-import { type ModalProviderRef } from '@idux/components/modal'
-import { type NotificationProviderRef } from '@idux/components/notification'
-import { type SpinProviderRef } from '@idux/components/spin'
+import type {
+  DrawerProviderRef,
+  LoadingBarProviderRef,
+  MessageProviderRef,
+  ModalProviderRef,
+  NotificationProviderRef,
+  SpinProviderRef,
+} from '@idux/components'
 
 let Drawer: DrawerProviderRef | undefined
 let LoadingBar: LoadingBarProviderRef | undefined

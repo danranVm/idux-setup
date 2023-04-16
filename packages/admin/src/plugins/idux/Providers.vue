@@ -3,24 +3,24 @@ import { onMounted, provide, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import {
-  type DrawerProviderRef,
-  DRAWER_PROVIDER_TOKEN,
   type DrawerProviderInstance,
-  type LoadingBarProviderRef,
-  LOADING_BAR_PROVIDER_TOKEN,
   type LoadingBarProviderInstance,
-  type MessageProviderRef,
-  MESSAGE_PROVIDER_TOKEN,
-  type MessageProviderInstance,
-  type ModalProviderRef,
-  MODAL_PROVIDER_TOKEN,
-  type ModalProviderInstance,
-  type NotificationProviderRef,
-  NOTIFICATION_PROVIDER_TOKEN,
   type NotificationProviderInstance,
-  type SpinProviderRef,
-  SPIN_PROVIDER_TOKEN,
+  type MessageProviderInstance,
+  type ModalProviderInstance,
   type SpinProviderInstance,
+  type DrawerProviderRef,
+  type LoadingBarProviderRef,
+  type NotificationProviderRef,
+  type MessageProviderRef,
+  type ModalProviderRef,
+  type SpinProviderRef,
+  DRAWER_PROVIDER_TOKEN,
+  LOADING_BAR_PROVIDER_TOKEN,
+  NOTIFICATION_PROVIDER_TOKEN,
+  MESSAGE_PROVIDER_TOKEN,
+  MODAL_PROVIDER_TOKEN,
+  SPIN_PROVIDER_TOKEN,
 } from '@idux/components'
 import { isFunction, has } from 'lodash-es'
 

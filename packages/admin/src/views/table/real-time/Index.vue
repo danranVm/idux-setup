@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { watch, ref, shallowRef } from 'vue'
 
-import { SearchField, SearchValue } from '@idux/pro'
+import { type SearchField, type SearchValue } from '@idux/pro'
 
 import { useLists } from './useLists'
-import { TableData, useTable } from './useTable'
+import { type TableData, useTable } from './useTable'
 
 const refreshTimeDataSource = [
   { key: 'none', label: '刷新间隔：不刷新' },

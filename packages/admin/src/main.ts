@@ -6,6 +6,7 @@ import { createApp } from 'vue'
 
 import App from './App.vue'
 
+import { setupI18n } from '@/plugins/i18n'
 import { setupIDux } from '@/plugins/idux'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
@@ -16,6 +17,8 @@ async function bootstrap() {
   setupStore(app)
 
   setupRouter(app)
+
+  setupI18n(app)
 
   setupIDux(app)
 

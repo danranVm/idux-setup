@@ -1,4 +1,4 @@
-import { type App } from 'vue'
+import type { App } from 'vue'
 
 import { vClickOutside } from '@idux/cdk'
 import {
@@ -15,9 +15,10 @@ import IduxProviders from './Providers.vue'
 addIconDefinitions(IDUX_ICON_DEPENDENCIES)
 
 // 动态加载：不会被打包，可以减小包体积，需要加载的时候时候 http 请求加载
+// 自定义图标的前缀
 const customIconPrefix = 'custom:'
 const loadIconDynamically = (iconName: string) => {
-  const isCustom = iconName.startsWith('customIconPrefix')
+  const isCustom = iconName.startsWith(customIconPrefix)
   const iconDirname = isCustom ? 'custom-icons' : 'idux-icons'
   const iconFilename = isCustom ? iconName.slice(customIconPrefix.length) : iconName
   return fetch(import.meta.env.BASE_URL + `${iconDirname}/${iconFilename}.svg`).then(res =>

@@ -1,52 +1,51 @@
 .layout-setting-panels {
-     .layout-setting-panel-wrapper {
+  .layout-setting-panel-wrapper {
+    .ix-space-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .@{idux-prefix}-space-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .layout-setting-panel {
+      width: 104px;
+      height: 68px;
+      border-radius: 2px;
+      border: 2px solid #d3d7de;
+      cursor: pointer;
+      transition: all 0.3s ease-in;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 12px;
+        letter-spacing: 0;
+      }
+    }
+
+    &.disabled {
+      .layout-setting-panel {
+        cursor: not-allowed;
+
+        &-title {
+          color: #a1a7b3;
         }
+      }
 
-        .layout-setting-panel {
-            width: 104px;
-            height: 68px;
-            border-radius: 2px;
-            border: 2px solid #D3D7DE;
-            cursor: pointer;
-            transition: all .3s ease-in;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        
-            &-title {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 12px;
-                font-weight: normal;
-                line-height: 12px;
-                letter-spacing: 0;
-            }
-        }
+      img {
+        opacity: 0.5;
+      }
+    }
 
-        &.disabled {
-            .layout-setting-panel {
-                cursor: not-allowed;
-
-                &-title {
-                    color: #A1A7B3;
-                }
-            }
-
-            img {
-                opacity: 0.5;
-            }
-        }
-
-        &.active:not(.disabled) {
-            .layout-setting-panel {
-                border-color: #1C6EFF;
-            }
-        }
-     }
+    &.active:not(.disabled) {
+      .layout-setting-panel {
+        border-color: #1c6eff;
+      }
+    }
+  }
 }

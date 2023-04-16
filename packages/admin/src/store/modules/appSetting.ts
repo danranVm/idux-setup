@@ -1,8 +1,7 @@
-import { computed, ref, shallowRef, watch } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 
-import { type ProLayoutTheme, type ProLayoutType } from '@idux/pro'
+import type { ProLayoutTheme, ProLayoutType } from '@idux/pro'
 import { defineStore } from 'pinia'
-
 
 export type AppThemeType = 'light' | 'dark'
 
@@ -10,7 +9,7 @@ export const useAppSettingStore = defineStore(
   'appSetting',
   () => {
     const appTheme = shallowRef<AppThemeType>('light')
-    const layoutTheme = ref<ProLayoutTheme>({
+    const layoutTheme = shallowRef<ProLayoutTheme>({
       header: 'dark',
       sider: 'light',
     })
