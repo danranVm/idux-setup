@@ -3,16 +3,16 @@ export type DashboardCardType = 'bar' | 'line' | 'pie'
 export interface DashboardCardOptions {}
 
 export interface DashboardCard {
-  key: number
+  key: string
   type: DashboardCardType
-  name: string
-  description?: string
-  options: DashboardCardOptions
-  minH?: number
-  minW?: number
+  title: string
+  dataSet: string
+  legend: string[]
+  dateRange: string
+  userRange: string
 }
 
 export interface DashboardPanel {
   key: string
-  name: string
+  title: string
 }
