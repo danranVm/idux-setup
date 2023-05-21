@@ -1,76 +1,92 @@
-import { ref, shallowRef } from 'vue'
+import { onMounted, shallowRef } from 'vue'
 
-import { Validators, useFormControl } from '@idux/cdk'
+import { isNil, uniqueId } from 'lodash-es'
 
 import type { DashboardPanel } from '../types'
 
-import { useI18n } from '@/plugins/i18n'
+let defaultPanels: DashboardPanel[] = [
+  {
+    key: '1',
+    title: '运营全景',
+    description: '这里是简介，这里是简介，这里是简介',
+    type: 'default',
+    isShow: true,
+    order: 1,
+  },
+  {
+    key: '2',
+    title: '主机安全',
+    description: '这里是简介，这里是简介，这里是简介',
+    type: 'default',
+    isShow: false,
+    order: 2,
+  },
 
-export function usePanels() {
-  const { $i } = useI18n()
+  {
+    key: '10',
+    title: '自定义面板',
+    type: 'custom',
+    isShow: false,
+    order: 3,
+  },
+]
+
+export function usePanels(): {
+  panels: ShallowRef<DashboardPanel[]>
+  loadPanels: () => DashboardPanel[]
+  savePanel: (panel: DashboardPanel) => void
+  deletePanel: (key: string) => void
+} {
+  const panels = shallowRef<DashboardPanel[]>([])
+  const loading = shallowRef(false)
 
   // 初始化数据。
-  const initPanels = (): DashboardPanel[] => {
-    const local = localStorage.getItem('dashboard')
-    return local ? JSON.parse(local) : [{ key: 'default', title: $i('自定义面板') }]
+  const loadPanels = (): DashboardPanel[] => {
+    loading.value = true
+    setTimeout(() => {
+      panels.value = [...defaultPanels]
+      loading.value = false
+    }, 300)
   }
 
   // 保存数据。
-  const savePanels = (newPanels: DashboardPanel[]) => {
-    panels.value = newPanels
-    localStorage.setItem('dashboard', JSON.stringify(newPanels))
-  }
-
-  const panels = shallowRef(initPanels())
-
-  const selectedKey = ref<string>()
-  const editingKey = ref<string>()
-  const editingControl = useFormControl('', [Validators.required])
-
-  const handleAdd = () => {
-    const newKey = 'panel' + Math.random()
-    panels.value = [...panels.value, { key: newKey, title: '' }]
-    selectedKey.value = newKey
-    editingKey.value = newKey
-    editingControl.reset()
-  }
-
-  const handleEdit = (panel: DashboardPanel) => {
-    editingKey.value = panel.key
-    editingControl.setValue(panel.title)
-  }
-
-  const handleEditEnd = () => {
-    if (!editingControl.valid.value) {
-      editingControl.markAsDirty()
-      return
+  const savePanel = (panel: DashboardPanel) => {
+    // 没有 key 代表新增
+    if (isNil(panel.key)) {
+      // 新增接口, 默认后端生成新的key
+      let newKey = uniqueId()
+      while (defaultPanels.find(item => item.key === newKey)) {
+        newKey = uniqueId()
+      }
+      defaultPanels.push({
+        key: newKey,
+        title: panel.title,
+        type: 'custom',
+        isShow: true,
+        order: defaultPanels.length,
+      })
+    } else {
+      // 编辑接口
+      const currPanel = defaultPanels.find(item => item.key === panel.key)
+      defaultPanels.push({ ...currPanel, ...panel })
     }
 
-    const currPanel = panels.value.find(panel => panel.key === editingKey.value)
-    if (currPanel) {
-      currPanel.title = editingControl.getValue()
-    }
-
-    savePanels([...panels.value])
-
-    editingKey.value = undefined
-    editingControl.reset()
+    loadPanels()
   }
 
-  const handleDelete = (keu: string) => {
-    panels.value = panels.value.filter(panel => panel.key !== keu)
-    // 删除后跳转到第一个 panel, 理论上跳转到后一个或者前一个更好，看交互需求。
-    selectedKey.value = panels.value[0].key
+  const deletePanel = (key: string) => {
+    // 删除接口
+    defaultPanels = defaultPanels.filter(panel => panel.key !== key)
+    loadPanels()
   }
+
+  onMounted(() => loadPanels())
 
   return {
     panels,
-    selectedKey,
-    editingKey,
-    editingControl,
-    handleAdd,
-    handleEdit,
-    handleEditEnd,
-    handleDelete,
+    loading,
+    loadPanels,
+    savePanel,
+    deletePanel,
   }
 }
