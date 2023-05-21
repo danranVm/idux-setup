@@ -1,8 +1,10 @@
-/* eslint-disable import/no-unassigned-import */
 import 'virtual:windi.css'
 import '@/theme/index.less'
 
 import { createApp } from 'vue'
+
+import 'vue3-drr-grid-layout/dist/style.css'
+import GridLayout from 'vue3-drr-grid-layout'
 
 import App from './App.vue'
 
@@ -21,6 +23,8 @@ async function bootstrap() {
   setupI18n(app)
 
   setupIDux(app)
+
+  app.use(GridLayout)
 
   app.mount('#app')
 }

@@ -8,6 +8,7 @@ export type AppThemeType = 'light' | 'dark'
 export const useAppSettingStore = defineStore(
   'appSetting',
   () => {
+    const version = shallowRef('v2.0')
     const appTheme = shallowRef<AppThemeType>('light')
     const layoutTheme = shallowRef<ProLayoutTheme>({
       header: 'dark',
@@ -43,6 +44,7 @@ export const useAppSettingStore = defineStore(
     watch(appTheme, setLayoutTheme)
 
     return {
+      version,
       appTheme,
       setAppTheme,
       layoutTheme,

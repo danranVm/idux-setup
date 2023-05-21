@@ -1,18 +1,22 @@
-export type DashboardCardType = 'bar' | 'line' | 'pie'
-
-export interface DashboardCardOptions {}
+export interface DashboardPanel {
+  key: string
+  type: 'default' | 'custom'
+  title: string
+  description: string
+  order: number
+  isShow?: boolean
+}
 
 export interface DashboardCard {
   key: string
-  type: DashboardCardType
+  type: string
   title: string
   dataSet: string
   legend: string[]
   dateRange: string
   userRange: string
-}
-
-export interface DashboardPanel {
-  key: string
-  title: string
+  x: number
+  y: number
+  w: number
+  h: number
 }

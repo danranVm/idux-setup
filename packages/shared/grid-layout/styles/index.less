@@ -1,0 +1,43 @@
+.x-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+.x-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
+
+  &-css-transforms {
+    transition-property: transform;
+  }
+
+  &-dragging {
+    transition: none;
+    z-index: 3;
+    will-change: transform;
+  }
+
+  &-dropping {
+    visibility: hidden;
+  }
+
+  &-resizing {
+    z-index: 2;
+    will-change: width, height;
+  }
+
+  &-placeholder {
+    background: var(--ix-background-color-deep);
+    transition-duration: 100ms;
+    z-index: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  img {
+    pointer-events: none;
+    user-select: none;
+  }
+}

@@ -5,28 +5,29 @@
   display: flex;
 
   .login-banner-wrapper {
+    position: relative;
     flex: 1;
     background-image: url('./assets/login-bg.png');
     background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    background-size: cover;
+    background-size: 100% 100%;
+    max-width: 1440px;
 
     .login-banner {
       position: absolute;
-      right: 680px;
+      width: 75%;
       bottom: 5%;
-      top: 15%;
-      left: 8%;
+      top: 5%;
+      left: 60px;
 
       &-header {
         font-size: 28px;
         font-weight: 700;
         color: #3d3d3d;
-        margin-bottom: 16px;
+        margin-bottom: 28px;
       }
 
       &-content {
+        margin-left: 48px;
         font-size: 16px;
         line-height: 40px;
         color: #707a89;
@@ -36,10 +37,10 @@
   }
 
   .login-box {
+    width: 36%;
     height: 100%;
     background-color: #fff;
     position: relative;
-    box-shadow: 0 1px 6px 1px rgb(0 0 0 / 20%);
 
     &-header {
       position: absolute;
@@ -47,9 +48,13 @@
       right: 20px;
       left: 20px;
       height: 80px;
-      padding-top: 12px;
+      padding-top: 18px;
       background-color: #fff;
       z-index: 2;
+
+      &-logo {
+        display: none;
+      }
 
       .help-box {
         width: 32px;
@@ -66,13 +71,13 @@
     }
 
     &-content {
-      padding: 24% 0 36px;
+      padding: 160px 0 36px;
       height: 100%;
       overflow: auto;
 
       .login-inner-box {
-        width: 300px;
-        margin: 0 auto;
+        width: 360px;
+        margin: auto 25% auto auto;
 
         &-product {
           &-name {
@@ -91,40 +96,24 @@
           position: relative;
           margin: 8% auto 70px;
 
-          .login-inner-box-type-radio {
-            padding: 4px;
-            background-color: #eceff3;
-            border-radius: 4px;
-            width: 100%;
-
-            .ix-space-item {
-              flex: 1;
-              text-align: center;
-            }
-
-            .ix-button {
+          .login-inner-box-type-tabs {
+            .ix-tabs-nav {
               width: 100%;
-              text-align: center;
-              font-size: 16px;
-              height: 36px;
-              line-height: 36px;
-              min-width: 96px;
-              background-color: #eceff3;
-              color: #5e6573;
-              border: none;
-              border-radius: 2px;
+              .ix-tabs-nav-tab {
+                flex: 1;
+                font-size: 16px;
+                justify-content: flex-start;
 
-              &::before {
-                content: unset;
-              }
-
-              &:not(:first-child) {
-                margin-left: 4px;
-              }
-
-              &.ix-radio-checked {
-                background: #fff;
-                color: #1c6eff;
+                &.ix-tabs-nav-tab-selected {
+                  .ix-tabs-nav-tab-label {
+                    color: #2f3540;
+                  }
+                }
+                &:not(.ix-tabs-nav-tab-selected) {
+                  .ix-tabs-nav-tab-label {
+                    color: #6f7785;
+                  }
+                }
               }
             }
           }
@@ -176,15 +165,48 @@
             }
 
             &-form-item-message {
-              min-height: 24px;
+              min-height: 12px;
             }
+          }
+        }
+
+        &-qrcode {
+          width: 100%;
+          height: 360px;
+          border-radius: 4px;
+          border: 1px solid #d3d7de;
+          position: relative;
+          margin-top: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+
+          &-title {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            background-color: #fff;
+            padding: 0 16px;
+            font-size: 24px;
+            top: 0;
+          }
+
+          &-tip {
+            color: #454c59;
+          }
+
+          img {
+            width: 220px;
+            height: 220px;
           }
         }
       }
 
       .other-login-wrapper {
         width: 70%;
-        margin: 24px auto 0;
+        margin: 38px auto;
+        position: relative;
 
         .ix {
           &-divider-label {
@@ -194,6 +216,58 @@
           &-row {
             margin: auto;
           }
+        }
+
+        .other-login-nav-pre,
+        .other-login-nav-next {
+          position: absolute;
+          font-size: 16px;
+          color: #5e6573;
+          cursor: pointer;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          z-index: 1;
+
+          &:hover {
+            color: var(--ix-text-color);
+          }
+        }
+        .other-login-nav-pre {
+          left: -8px;
+        }
+
+        .other-login-nav-next {
+          right: -6px;
+        }
+        .other-login-nav-wrapper {
+          position: relative;
+          display: inline-block;
+          display: flex;
+          flex: auto;
+          align-self: stretch;
+          overflow: hidden;
+          white-space: nowrap;
+          transform: translate(0);
+
+          .other-login-nav-list {
+            position: relative;
+            display: flex;
+            transition: transform 0.3s;
+
+            .other-login-nav {
+              width: 62px;
+            }
+          }
+        }
+      }
+
+      .switch-type-btn {
+        margin-top: 24px;
+        color: #6f7785;
+
+        .ix-icon {
+          margin-top: 1px;
         }
       }
     }
@@ -210,35 +284,46 @@
     }
   }
 
-  &.sm {
+  @media (max-width: 1279px) or (min-width: 2566px) {
+    .login-box-header-logo {
+      display: block;
+    }
+
+    .login-banner-wrapper {
+      display: none;
+    }
+
     .login-box {
       width: 100%;
 
       .login-inner-box {
         width: 450px;
+        margin: auto;
       }
     }
   }
 
-  &.md {
+  @media (min-width: 1280px) and (max-width: 1365px) {
     .login-box {
-      width: 512px;
+      width: 30%;
     }
   }
 
-  &.lg {
+  @media (min-width: 1366px) and (max-width: 1439px) {
     .login-box {
-      position: absolute;
-      width: 610px;
-      right: 40px;
-      top: 5%;
-      bottom: 5%;
-      height: auto;
-      border-radius: 4px;
+      width: 35%;
+    }
+  }
 
-      .login-inner-box {
-        width: 60%;
-      }
+  @media (min-width: 1440px) and (max-width: 1919px) {
+    .login-box {
+      width: 40%;
+    }
+  }
+
+  @media (min-width: 1920px) and (max-width: 2562px) {
+    .login-box {
+      width: 50%;
     }
   }
 }

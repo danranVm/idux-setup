@@ -12,5 +12,7 @@
   "scripts": {
     "clean": "rimraf dist node_modules"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "rimraf":"^5.0.0"
+  }
 }

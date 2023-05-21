@@ -44,7 +44,7 @@ export function createVitePlugins(env: ImportMetaEnv): Plugin[] {
     viteStaticCopy({
       targets: [
         {
-          src: resolve(__dirname, '../../node_modules/@idux/components/icon/assets/*.svg'),
+          src: resolve(__dirname, '../../node_modules/@idux/components/icon/assets/*.svg').replace(/\\/g, '/'),
           dest: 'idux-icons',
         },
       ],

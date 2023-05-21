@@ -31,7 +31,6 @@ module.exports = {
     'import/no-named-as-default': 0,
     'import/no-unused-modules': 'error',
     'import/no-unresolved': 'off',
-    'import/no-unassigned-import': 'error',
     'import/order': [
       'error',
       {
