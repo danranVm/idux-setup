@@ -55,6 +55,3 @@ function getClasses(key: VKey, disabled?: boolean) {
     </IxCol>
   </IxRow>
 </template>
-<style lang="less">
-@import url('./layoutSetting.less');
-</style>

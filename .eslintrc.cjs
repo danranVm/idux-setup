@@ -26,6 +26,7 @@ module.exports = {
     // common
     'no-console': 'error',
     'no-debugger': 'error',
+    semi: ['error', 'never'],
 
     'import/no-duplicates': 'error',
     'import/no-named-as-default': 0,
@@ -39,7 +40,7 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
         pathGroups: [
           {
-            pattern: '{vue,@vue/**,vue-router}',
+            pattern: '{vue,@vue/**,vue-router,vue-demi}',
             group: 'external',
             position: 'before',
           },

@@ -29,7 +29,10 @@ export function createVitePlugins(env: ImportMetaEnv): Plugin[] {
     vueJsx(),
     windiCSS(),
     viteComponents({
-      dts: false,
+      extensions: ['vue'],
+      dirs: ['src/components'],
+      dts: 'src/components.d.ts',
+      directoryAsNamespace: true,
       resolvers: [
         (name: string) => {
           if (name.startsWith('Ix') && name.endsWith('Chart')) {
@@ -44,7 +47,10 @@ export function createVitePlugins(env: ImportMetaEnv): Plugin[] {
     viteStaticCopy({
       targets: [
         {
-          src: resolve(__dirname, '../../node_modules/@idux/components/icon/assets/*.svg').replace(/\\/g, '/'),
+          src: resolve(__dirname, '../../node_modules/@idux/components/icon/assets/*.svg').replace(
+            /\\/g,
+            '/',
+          ),
           dest: 'idux-icons',
         },
       ],

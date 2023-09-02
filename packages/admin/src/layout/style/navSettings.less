@@ -1,0 +1,200 @@
+.nav-settings {
+  height: 500px;
+  &__modal {
+    position: relative;
+    .ix-modal-body {
+      overflow: scroll;
+    }
+  }
+  &__title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    &__label {
+      font-size: 12px;
+      color: #a1a7b3;
+    }
+
+    &__info-icon {
+      margin-left: 4px;
+      font-size: 16px;
+      color: #1c6eff;
+      cursor: pointer;
+    }
+
+    &__suffix {
+      margin-left: auto;
+    }
+  }
+
+  &__block {
+    &__header {
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+
+  &__display {
+    margin-top: 16px;
+    &__content {
+      width: 100%;
+      border: 1px solid #e1e5eb;
+      border-radius: 2px;
+    }
+    &__sub {
+      background-color: #f7f9fc;
+    }
+    &__dragging &__sub {
+      opacity: 0;
+    }
+
+    &__node {
+      width: 100%;
+      height: 32px;
+      padding-left: 8px;
+      padding-right: 24px;
+      display: flex;
+      align-items: center;
+      &__drag-handle {
+        height: 100%;
+        width: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      &__expand-icon {
+        margin-left: 8px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      &__suffix {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+      }
+      &-level-1 {
+        &:hover {
+          background: #fff;
+          .ix-tree-node-content {
+            background: #fff;
+          }
+        }
+
+        &.nav-settings__display__node--drag-disabled {
+          padding-left: 24px;
+        }
+      }
+      &-level-2 {
+        height: 33px;
+        padding-left: 24px;
+        position: relative;
+        box-sizing: border-box;
+        &::after {
+          position: absolute;
+          bottom: 0;
+          width: calc(100% - 48px);
+          content: ' ';
+          height: 1px;
+          display: block;
+          background-color: #e1e5eb;
+        }
+      }
+      &-level-3 {
+        padding-left: 24px;
+        &::before {
+          content: ' ';
+          display: inline-block;
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background-color: #d8d8d8;
+          margin-left: 10px;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .card-image(@image, @size, @right: 12px) {
+    position: relative;
+    overflow: hidden;
+    &::after {
+      position: absolute;
+      right: @right;
+      top: 8px;
+      content: ' ';
+      width: @size;
+      height: @size;
+      background-image: @image;
+      background-size: contain;
+    }
+  }
+
+  &__mode {
+    &__card {
+      &-overview {
+        .card-image(url(../assets/nav-overview-card-bg.svg), 35px);
+
+        &.card-checkable-item--active {
+          .card-image(url(../assets/nav-overview-card-bg-active.svg), 35px);
+        }
+      }
+
+      &-search {
+        .card-image(url(../assets/nav-search-card-bg.svg), 40px, 6px);
+
+        &.card-checkable-item--active {
+          .card-image(url(../assets/nav-search-card-bg-active.svg), 40px, 6px);
+        }
+      }
+
+      &-tab {
+        .card-image(url(../assets/nav-tab-card-bg.svg), 40px);
+
+        &.card-checkable-item--active {
+          .card-image(url(../assets/nav-tab-card-bg-active.svg), 40px);
+        }
+      }
+
+      &-shortcut {
+        .card-image(url(../assets/nav-shortcut-card-bg.svg), 46px);
+
+        &.card-checkable-item--active {
+          .card-image(url(../assets/nav-shortcut-card-bg-active.svg), 46px);
+        }
+      }
+    }
+
+    &__guide {
+      &__reference {
+        position: absolute;
+        top: 10px;
+        right: 0;
+      }
+
+      &__content {
+        width: 365px;
+      }
+
+      &__desciption {
+        margin-bottom: 12px;
+        font-size: 12px;
+        line-height: 20px;
+        color: #6f7785;
+      }
+
+      &__video {
+        width: 100%;
+        border-radius: 2px;
+        border: 1px solid #e1e5eb;
+      }
+    }
+  }
+}

@@ -2,10 +2,13 @@
   "extends": "../../tsconfig.app.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "verbatimModuleSyntax": true,
+    "composite": true,
     "ignoreDeprecations": "5.0",
+    "module": "esnext",
+    "moduleResolution": "node",
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "../../typings/*.d.ts"]
 }

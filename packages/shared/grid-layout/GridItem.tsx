@@ -18,7 +18,7 @@ import {
   useResizable,
   useDraggable,
 } from '@idux/cdk'
-import { useKey } from '@idux/components/utils'
+import { useKey } from '@idux/cdk'
 import { merge } from 'lodash-es'
 
 import { gridLayoutToken } from './token'

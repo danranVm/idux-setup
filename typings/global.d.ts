@@ -6,6 +6,8 @@ declare global {
   function clearInterval(handle?: number): void
   function clearTimeout(handle?: number): void
 
+  const __DEV__: boolean
+
   interface ImportMetaEnv {
     readonly VITE_BASE_URL: string
     readonly VITE_SERVER_URL: string

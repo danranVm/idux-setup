@@ -1,7 +1,5 @@
 import { type RouteRecordRaw } from 'vue-router'
 
-import { GlobalLayout } from '@/layout'
-
 const routeName = 'exception'
 
 const routes: Array<RouteRecordRaw> = [
@@ -13,8 +11,7 @@ const routes: Array<RouteRecordRaw> = [
       sort: 10,
       icon: 'exception',
     },
-    redirect: '/exception/404',
-    component: GlobalLayout,
+    redirect: '404',
     children: [
       {
         path: '404',

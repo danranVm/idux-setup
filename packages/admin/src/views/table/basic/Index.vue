@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import { ref, shallowRef } from 'vue'
+import { shallowRef } from 'vue'
 
+import { DndSortable } from '@idux/setup-shared'
+
+import SortableRow from './SortableRow.vue'
 import { type TableData, useTable } from './useTable'
 
 const { pagination, columns } = useTable()
@@ -26,8 +29,10 @@ function getData() {
   return data
 }
 
-const dataSource = ref<TableData[]>(getData())
+const dataSource = shallowRef<TableData[]>(getData())
 const spining = shallowRef(false)
+const customTag = { bodyRow: SortableRow }
+const customAdditional = { bodyRow: (data: { record: TableData; rowIndex: number }) => data }
 
 const onReload = () => {
   spining.value = true
@@ -36,44 +41,60 @@ const onReload = () => {
     spining.value = false
   }, 1000)
 }
+const onSortChange = (data: TableData[]) => (dataSource.value = data)
+const recordCanDrag = (data: TableData) => data.key % 2 === 0
 </script>
 <template>
   <div class="basic-table-page">
-    <IxHeader class="dark:text-gray-300"> 标准列表 </IxHeader>
-    <IxProTable
-      autoHeight
-      :columns="columns"
+    <IxHeader class="dark:text-gray-300 basic-table-page__header"> 标准列表 </IxHeader>
+    <DndSortable
+      style="height: 100%"
+      :animation="200"
+      container=".ix-table-tbody"
       :dataSource="dataSource"
-      :spin="spining"
-      :layoutTool="{ searchable: true }"
-      :pagination="pagination"
-      class="common-table"
+      handle=".sortable-icon"
+      @change="onSortChange"
     >
-      <template #header>
-        <IxRow justify="space-between" align="center" class="mb-2">
-          <IxCol>
-            <IxButtonGroup :gap="8">
-              <IxButton mode="primary">新增</IxButton>
-              <IxButton disabled>删除</IxButton>
-            </IxButtonGroup>
-          </IxCol>
-          <IxCol>
-            <IxSpace :size="4">
-              <IxSelect style="width: 160px" placeholder="告警等级"></IxSelect>
-              <IxInput placeholder="搜索告警名称" suffix="search" />
-              <IxButtonGroup :gap="4" shape="square">
-                <IxTooltip title="导出">
-                  <IxButton icon="export"></IxButton>
-                </IxTooltip>
-                <IxTooltip title="刷新">
-                  <IxButton icon="reload" @click="onReload"></IxButton>
-                </IxTooltip>
+      <IxProTable
+        autoHeight
+        :columns="columns"
+        :customTag="customTag"
+        :customAdditional="customAdditional"
+        :dataSource="dataSource"
+        :spin="spining"
+        :layoutTool="{ searchable: true }"
+        :pagination="pagination"
+        class="common-table"
+      >
+        <template #sortable="{ record }">
+          <IxIcon v-if="recordCanDrag(record)" name="holder" class="sortable-icon" />
+        </template>
+        <template #header>
+          <IxRow justify="space-between" align="center" class="mb-2">
+            <IxCol>
+              <IxButtonGroup :gap="8">
+                <IxButton mode="primary">新增</IxButton>
+                <IxButton disabled>删除</IxButton>
               </IxButtonGroup>
-            </IxSpace>
-          </IxCol>
-        </IxRow>
-      </template>
-    </IxProTable>
+            </IxCol>
+            <IxCol>
+              <IxSpace :size="4">
+                <IxSelect style="width: 160px" placeholder="告警等级"></IxSelect>
+                <IxInput placeholder="搜索告警名称" suffix="search" />
+                <IxButtonGroup :gap="4" shape="square">
+                  <IxTooltip title="导出">
+                    <IxButton icon="export"></IxButton>
+                  </IxTooltip>
+                  <IxTooltip title="刷新">
+                    <IxButton icon="reload" @click="onReload"></IxButton>
+                  </IxTooltip>
+                </IxButtonGroup>
+              </IxSpace>
+            </IxCol>
+          </IxRow>
+        </template>
+      </IxProTable>
+    </DndSortable>
   </div>
 </template>
 <style lang="less">

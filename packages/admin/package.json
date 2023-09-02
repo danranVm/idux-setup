@@ -17,6 +17,6 @@
     "vue3-drr-grid-layout": "^1.9.7"
   },
   "devDependencies": {
-    "rimraf":"^5.0.0"
+    "rimraf": "^5.0.0"
   }
 }

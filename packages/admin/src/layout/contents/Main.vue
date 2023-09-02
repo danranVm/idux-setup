@@ -2,14 +2,14 @@
 import { RouterView } from 'vue-router'
 </script>
 <template>
-  <router-view>
-    <template #default="{ Component, route }">
-      <transition>
+  <div class="global-layout__content__main">
+    <router-view>
+      <template #default="{ Component, route }">
         <keep-alive v-if="route.meta.keepAlive">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
         <component v-else :is="Component" :key="route.fullPath" />
-      </transition>
-    </template>
-  </router-view>
+      </template>
+    </router-view>
+  </div>
 </template>

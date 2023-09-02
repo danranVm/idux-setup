@@ -12,7 +12,13 @@
   "scripts": {
     "clean": "rimraf dist node_modules"
   },
+  "dependencies": {
+    "@vue/shared": "^3.3.4",
+    "sortablejs": "^1.15.0",
+    "vue-demi": "^0.14.0"
+  },
   "devDependencies": {
-    "rimraf":"^5.0.0"
+    "@types/sortablejs": "^1.15.1",
+    "rimraf": "^5.0.0"
   }
 }

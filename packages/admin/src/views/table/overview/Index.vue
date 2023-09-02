@@ -93,5 +93,5 @@ const onReload = () => {
   </div>
 </template>
 <style lang="less">
-@import url('./index.less');
+@import url('./styles/index.less');
 </style>

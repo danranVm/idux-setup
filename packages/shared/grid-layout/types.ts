@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { DefineComponent, HTMLAttributes, PropType } from 'vue'
 
 import type {
   ExtractPublicPropTypes,
@@ -47,6 +47,10 @@ export const gridLayoutProps = {
 
 export type GridLayoutInnerProps = ExtractInnerPropTypes<typeof gridLayoutProps>
 export type GridLayoutProps = ExtractPublicPropTypes<typeof gridLayoutProps>
+export type GridLayoutComponent = DefineComponent<
+  Omit<HTMLAttributes, keyof GridLayoutProps> & GridLayoutProps
+>
+export type GridLayoutInstance = InstanceType<DefineComponent<GridLayoutProps>>
 
 export const gridItemProps = {
   w: { type: Number, required: true },
@@ -70,6 +74,10 @@ export const gridItemProps = {
 
 export type GridItemInnerProps = ExtractInnerPropTypes<typeof gridItemProps>
 export type GridItemProps = ExtractPublicPropTypes<typeof gridItemProps>
+export type GridItemComponent = DefineComponent<
+  Omit<HTMLAttributes, keyof GridItemProps> & GridItemProps
+>
+export type GridItemInstance = InstanceType<DefineComponent<GridItemProps>>
 
 export interface GridData extends GridItemProps {
   key: VKey

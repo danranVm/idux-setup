@@ -1,0 +1,31 @@
+.layout-recent-records {
+  width: 100%;
+
+  &__header {
+    color: #bec3cc;
+    height: 40px;
+    width: 100%;
+    font-size: 14px;
+    &.layout-nav-item {
+      cursor: default;
+    }
+  }
+  &__content {
+    width: 100%;
+    font-size: 12px;
+  }
+  &__item {
+    color: #bec3cc;
+    height: 36px;
+    &.layout-nav-item {
+      padding-left: 40px;
+    }
+
+    &:hover {
+      .nav-item-hover();
+    }
+  }
+  &__empty {
+    .overview-empty();
+  }
+}

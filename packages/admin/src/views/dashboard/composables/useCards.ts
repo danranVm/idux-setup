@@ -1,77 +1,67 @@
-import { shallowRef } from 'vue'
+import { shallowRef, onMounted } from 'vue'
 
-import { useKey } from '@idux/components/utils'
+import { useKey } from '@idux/cdk'
 
 import type { DashboardCard } from '../types'
 
+let defaultCards: DashboardCard[] = [
+  {
+    key: 'basic-bar',
+    i: 'basic-bar',
+    title: '基础柱状图',
+    group: '柱状图',
+    x: 0,
+    y: 0,
+    w: 1,
+    h: 5,
+  },
+  {
+    key: 'basic-line',
+    i: 'basic-line',
+    title: '基础折线图',
+    group: '折线图',
+    x: 1,
+    y: 0,
+    w: 1,
+    h: 5,
+  },
+  {
+    key: 'basic-pie',
+    i: 'basic-pie',
+    title: '基础饼图',
+    group: '饼图',
+    x: 2,
+    y: 0,
+    w: 1,
+    h: 5,
+  },
+]
+
 export function useCards() {
   const key = useKey() as string
+  const cards = shallowRef<DashboardCard[]>([])
+  const loading = shallowRef(false)
+
   // 初始化数据。
-  const initCards = (): DashboardCard[] => {
-    const local = localStorage.getItem('dashboard-cards-' + key)
-    return local ? JSON.parse(local) : []
+  const loadCards = () => {
+    loading.value = true
+    // eslint-disable-next-line no-console
+    console.log('load cards by panel key:', key)
+    setTimeout(() => {
+      cards.value = [...defaultCards]
+      loading.value = false
+    }, 300)
   }
 
   // 保存数据。
-  const saveCards = (newPanels: DashboardCard[]) => {
-    cards.value = newPanels
-    localStorage.setItem('dashboard-cards-' + key, JSON.stringify(newPanels))
+  const saveCards = (cards: DashboardCard[]) => {
+    // 直接批量保存，否则对比太麻烦了，因为有坐标信息
+    defaultCards = cards
+
+    loadCards()
   }
 
-  const cards = shallowRef(initCards())
+  onMounted(() => loadCards())
 
-  const bottom = (cards: DashboardCard[]) => {
-    let max = 0
-    let bottomY = 0
-    let isNext = false
-    for (let i = cards.length - 1; i >= 0; i--) {
-      bottomY = cards[i].y! + cards[i].h!
-      if (bottomY > max) {
-        max = bottomY
-        isNext = cards[i].x! > 0
-      }
-    }
-    return [max, isNext] as const
-  }
-
-  const defaultWidth = 8
-  const defaultHeight = 8
-  const handleAdd = (card: DashboardCard) => {
-    if (cards.value.length > 0) {
-      const [bottomY, isNext] = bottom(cards.value)
-      saveCards([
-        ...cards.value,
-        {
-          ...card,
-          // @ts-ignore
-          i: card.key, // grid-layout 组件需要，后期替换成重构后的 grid-layout 可以删掉。
-          x: isNext ? 0 : defaultWidth,
-          y: isNext ? bottomY + defaultHeight : bottomY,
-          w: defaultWidth,
-          h: defaultHeight,
-        },
-      ])
-    } else {
-      // @ts-ignore
-      saveCards([{ ...card, i: card.key, x: 0, y: 0, w: defaultWidth, h: defaultHeight }])
-    }
-  }
-
-  const handleEdit = (card: DashboardCard) => {
-    const newCards: DashboardCard[] = []
-    cards.value.forEach(item => {
-      if (card.key === item.key) {
-        newCards.push({ ...item, ...cards })
-      } else {
-        newCards.push(item)
-      }
-    })
-    saveCards(newCards)
-  }
-
-  const handleDelete = (key: string) => {
-    saveCards(cards.value.filter(card => card.key !== key))
-  }
-
-  return { cards, handleAdd, handleEdit, handleDelete, saveCards }
+  return { cards, loading, saveCards }
 }

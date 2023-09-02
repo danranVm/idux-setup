@@ -1,6 +1,8 @@
-import { type InjectionKey } from 'vue'
+import type { InjectionKey } from 'vue'
 
-export type AppContext = {
+import type { NavRecordsContext } from '@/types'
+
+export interface AppContext extends NavRecordsContext {
   breakpoints: Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', boolean>
 }
 

@@ -30,8 +30,8 @@ export const createRouterGuards = (router: Router): void => {
     next()
   })
 
-  router.afterEach(to => {
-    document.title = 'iDux Setup - ' + (to.meta.title || document.title)
+  router.afterEach(_ => {
+    // document.title = 'iDux Setup - ' + (to.meta.title || document.title)
   })
 
   router.onError((error, to, from) => {

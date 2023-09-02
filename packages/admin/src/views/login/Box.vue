@@ -13,7 +13,6 @@ import { loginContextToken } from './context'
 
 import { useUserStore } from '@/store/modules/user'
 
-
 const { boxProductName } = inject(loginContextToken)!
 
 const router = useRouter()
@@ -33,24 +32,25 @@ const otherTypeDataSource = [
     icon: 'custom:wechart',
     title: '企业微信登录',
     onClick: () => {
-      loginTypeRef.value = 'wechart'
-    }
+      loginType.value = 'wechart'
+    },
   },
 ]
 
-const loginTypeRef = shallowRef('password')
-const isAgreedRef = shallowRef(false)
+const loginType = shallowRef('password')
+const isAgreed = shallowRef(false)
+const slideVerifyVisible = shallowRef(false)
 
 const showLoginForm = computed(() => {
-  return loginTypeDataSource.map(({ key }) => key).includes(loginTypeRef.value)
+  return loginTypeDataSource.map(({ key }) => key).includes(loginType.value)
 })
 
 const login = () => {
   const formGroup =
-    loginTypeRef.value === 'message' ? messageFormRef.value.control : passwordFormRef.value.control
+    loginType.value === 'message' ? messageFormRef.value.control : passwordFormRef.value.control
   if (formGroup.valid.value) {
     userStore.login()
-    router.push('/table/basic')
+    router.push('/')
     success('登录成功')
   } else {
     formGroup.markAsDirty()
@@ -58,7 +58,13 @@ const login = () => {
 }
 
 const returnLoginType = () => {
-  loginTypeRef.value = 'password'
+  loginType.value = 'password'
+}
+
+const onSlideVerifySuccess = () => {
+  setTimeout(() => {
+    slideVerifyVisible.value = false
+  }, 1000)
 }
 </script>
 <template>
@@ -68,8 +74,8 @@ const returnLoginType = () => {
       <div class="login-inner-box">
         <div class="login-inner-box-product" :class="!boxProductName ? 'mb-5' : ''">
           <!-- <div class="login-inner-box-product-logo flex items-center justify-center">
-                                            <img width="128" height="92" src="./assets/product-logo.svg" alt="产品logo" />
-                                          </div> -->
+                                                      <img width="128" height="92" src="./assets/product-logo.svg" alt="产品logo" />
+                                                    </div> -->
           <div class="login-inner-box-product-name" v-if="boxProductName">
             {{ boxProductName }}
           </div>
@@ -80,22 +86,32 @@ const returnLoginType = () => {
         </div>
         <IxRow class="login-inner-box-form-wrapper" :gutter="8" v-show="showLoginForm">
           <IxCol :span="24" class="mt-6">
-            <IxTabs v-model:selectedKey="loginTypeRef" class="login-inner-box-type-tabs" type="line" size="lg"
-              :dataSource="loginTypeDataSource">
+            <IxTabs
+              v-model:selectedKey="loginType"
+              class="login-inner-box-type-tabs"
+              type="line"
+              size="lg"
+              :dataSource="loginTypeDataSource"
+            >
             </IxTabs>
           </IxCol>
           <IxCol :span="24">
-            <MessageForm v-show="loginTypeRef === 'message'" ref="messageFormRef" />
-            <PasswordForm v-show="loginTypeRef === 'password'" ref="passwordFormRef" />
+            <MessageForm v-show="loginType === 'message'" ref="messageFormRef" />
+            <PasswordForm v-show="loginType === 'password'" ref="passwordFormRef" />
+          </IxCol>
+          <IxCol :span="24">
+            <IxButton size="lg" block @click="slideVerifyVisible = true">开始验证</IxButton>
           </IxCol>
           <IxCol :span="24">
             <IxSpace :size="0" block>
-              <IxCheckbox v-model:checked="isAgreedRef">我已阅读并同意</IxCheckbox>
+              <IxCheckbox v-model:checked="isAgreed">我已阅读并同意</IxCheckbox>
               <a class="cursor-pointer">《用户协议&隐私协议》</a>
             </IxSpace>
           </IxCol>
           <IxCol :span="24" class="mt-6">
-            <IxButton size="lg" mode="primary" block @click="login" :disabled="!isAgreedRef">立即登录</IxButton>
+            <IxButton size="lg" mode="primary" block @click="login" :disabled="!isAgreed"
+              >立即登录</IxButton
+            >
           </IxCol>
           <IxCol :span="24">
             <IxRow>
@@ -109,16 +125,24 @@ const returnLoginType = () => {
           </IxCol>
         </IxRow>
         <OtherType v-show="showLoginForm" :dataSource="otherTypeDataSource" />
-        <div v-show="loginTypeRef === 'wechart'" class="login-inner-box-qrcode">
+        <div v-show="loginType === 'wechart'" class="login-inner-box-qrcode">
           <span class="login-inner-box-qrcode-title">企业微信扫码</span>
-          <img src="" alt="二维码">
+          <img src="" alt="二维码" />
           <span class="login-inner-box-qrcode-tip">请使用企业微信扫描二维码登录</span>
         </div>
-        <IxButton v-show="!showLoginForm" class="switch-type-btn" block mode="text" icon="left" @click="returnLoginType">
+        <IxButton
+          v-show="!showLoginForm"
+          class="switch-type-btn"
+          block
+          mode="text"
+          icon="left"
+          @click="returnLoginType"
+        >
           切换到其他登录方式
         </IxButton>
       </div>
     </div>
     <BoxFooter />
+    <SlideVerify v-model:visible="slideVerifyVisible" @success="onSlideVerifySuccess"></SlideVerify>
   </section>
 </template>

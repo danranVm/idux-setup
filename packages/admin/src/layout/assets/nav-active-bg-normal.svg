@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="none"
+  version="1.1" width="200" height="36" viewBox="0 0 200 36">
+  <defs>
+    <linearGradient x1="1" y1="0.5" x2="0" y2="0.5" id="master_svg0_4441_020049">
+      <stop offset="1.4285714365541935%" stop-color="#233149" stop-opacity="1" />
+      <stop offset="100%" stop-color="#203E74" stop-opacity="1" />
+    </linearGradient>
+    <mask id="master_svg1_2536_044343/2445_88757">
+      <g style="mix-blend-mode:passthrough">
+        <rect x="0" y="0" width="200" height="36" rx="0" fill="#FFFFFF" fill-opacity="1" />
+      </g>
+    </mask>
+    <filter id="master_svg2_2536_044343/2445_88758" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-20" y="-20" width="45" height="64.6315803527832">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="5" result="effect1_foregroundBlur" />
+    </filter>
+    <filter id="master_svg3_2536_044343/2445_88750" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-20" y="-20" width="45" height="64.6315803527832">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="5" result="effect1_foregroundBlur" />
+    </filter>
+    <filter id="master_svg4_2536_044343/2445_88748" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-40" y="-40" width="90" height="110.3157901763916">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur" />
+    </filter>
+    <filter id="master_svg5_2536_044343/2445_88749" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-40" y="-40" width="116" height="110.3157901763916">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="10" result="effect1_foregroundBlur" />
+    </filter>
+    <filter id="master_svg6_2536_044343/2445_88759" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-2" y="-2" width="6" height="40">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="0.5" result="effect1_foregroundBlur" />
+    </filter>
+    <linearGradient x1="0.5" y1="0" x2="0.5" y2="1" id="master_svg7_2445_88762">
+      <stop offset="0%" stop-color="#1C6EFF" stop-opacity="0" />
+      <stop offset="38.57142925262451%" stop-color="#1C6EFF" stop-opacity="1" />
+      <stop offset="66.42857193946838%" stop-color="#458FFF" stop-opacity="0.7386153340339661" />
+      <stop offset="100%" stop-color="#1C6EFF" stop-opacity="0" />
+    </linearGradient>
+    <filter id="master_svg8_2536_044343/2445_88752" filterUnits="objectBoundingBox"
+      color-interpolation-filters="sRGB" x="-10" y="-10" width="31" height="56">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="2.5" result="effect1_foregroundBlur" />
+    </filter>
+    <linearGradient x1="0.5" y1="-0.22659943997859955" x2="0.5" y2="1.1948891878128052"
+      id="master_svg9_2445_88755">
+      <stop offset="0%" stop-color="#1C6EFF" stop-opacity="0" />
+      <stop offset="51.82328820228577%" stop-color="#D0E2FF" stop-opacity="1" />
+      <stop offset="99.99999403953552%" stop-color="#1C6EFF" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient x1="0.5" y1="-0.22659943997859955" x2="0.5" y2="1.1948891878128052"
+      id="master_svga_2445_88766">
+      <stop offset="0%" stop-color="#1C6EFF" stop-opacity="0" />
+      <stop offset="51.82328820228577%" stop-color="#D0E2FF" stop-opacity="1" />
+      <stop offset="99.99999403953552%" stop-color="#1C6EFF" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <g style="mix-blend-mode:passthrough">
+    <g style="mix-blend-mode:passthrough">
+      <rect x="0" y="0" width="200" height="36" rx="0" fill="url(#master_svg0_4441_020049)"
+        fill-opacity="1" />
+    </g>
+    <g style="mix-blend-mode:passthrough" mask="url(#master_svg1_2536_044343/2445_88757)">
+      <g style="mix-blend-mode:passthrough" filter="url(#master_svg2_2536_044343/2445_88758)">
+        <path
+          d="M-2,27.81568203125C-2,29.19638203125,-0.8807100000000001,30.31568203125,0.5,30.31568203125C1.88071,30.31568203125,3,29.19638203125,3,27.81568203125L3,17.99988203125L3,8.18408203125C3,6.8033720312499995,1.88071,5.68408203125,0.5,5.68408203125C-0.8807100000000001,5.68408203125,-2,6.8033720312499995,-2,8.18408203125L-2,27.81568203125Z"
+          fill="#458FFF" fill-opacity="1" />
+      </g>
+      <g style="mix-blend-mode:passthrough" filter="url(#master_svg3_2536_044343/2445_88750)">
+        <path
+          d="M-2,27.81568203125C-2,29.19638203125,-0.8807100000000001,30.31568203125,0.5,30.31568203125C1.88071,30.31568203125,3,29.19638203125,3,27.81568203125L3,17.99988203125L3,8.18408203125C3,6.8033720312499995,1.88071,5.68408203125,0.5,5.68408203125C-0.8807100000000001,5.68408203125,-2,6.8033720312499995,-2,8.18408203125L-2,27.81568203125Z"
+          fill="#6EADFF" fill-opacity="1" />
+      </g>
+      <g style="mix-blend-mode:passthrough" filter="url(#master_svg4_2536_044343/2445_88748)">
+        <path
+          d="M-4,7.842105388641357L-4,28.157905388641357C-4,30.91930538864136,-1.7614200000000002,33.15790538864135,1,33.15790538864135C3.76142,33.15790538864135,6,30.91930538864136,6,28.157905388641357L6,18.000005388641355L6,7.842105388641357C6,5.080685388641357,3.76142,2.8421053886413574,1,2.8421053886413574C-1.7614200000000002,2.8421053886413574,-4,5.080685388641357,-4,7.842105388641357Z"
+          fill="#1C6EFF" fill-opacity="1" />
+      </g>
+      <g style="opacity:0.30000001192092896;mix-blend-mode:passthrough"
+        filter="url(#master_svg5_2536_044343/2445_88749)">
+        <path
+          d="M-26,18.000005388641355C-26,26.371505388641356,-19.21358,33.15790538864135,-10.8421,33.15790538864135L-5.1579000000000015,33.15790538864135C3.2135999999999996,33.15790538864135,10,26.371505388641356,10,18.000005388641355C10,9.628525388641357,3.2135999999999996,2.8421053886413574,-5.1579000000000015,2.8421053886413574L-10.8421,2.8421053886413574C-19.21358,2.8421053886413574,-26,9.628525388641357,-26,18.000005388641355Z"
+          fill="#1C6EFF" fill-opacity="1" />
+      </g>
+      <g style="mix-blend-mode:passthrough" filter="url(#master_svg6_2536_044343/2445_88759)">
+        <path d="M0,0L0,36L2,36L2,18L2,0L0,0Z" fill="url(#master_svg7_2445_88762)" fill-opacity="1" />
+      </g>
+      <g style="opacity:0.5;mix-blend-mode:passthrough"
+        filter="url(#master_svg8_2536_044343/2445_88752)">
+        <path d="M-8,36L3,36L3,18L3,0L-8,0L-8,36Z" fill="url(#master_svg9_2445_88755)"
+          fill-opacity="1" />
+      </g>
+      <g style="mix-blend-mode:passthrough">
+        <path d="M0,36L1,36L1,18L1,0L0,0L0,36Z" fill="url(#master_svga_2445_88766)" fill-opacity="1" />
+      </g>
+    </g>
+  </g>
+</svg>

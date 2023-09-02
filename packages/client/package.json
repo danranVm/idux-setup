@@ -13,7 +13,7 @@
     "@idux/setup-shared": "workspace:*",
     "@idux/setup-theme": "workspace:*"
   },
-    "devDependencies": {
-    "rimraf":"^5.0.0"
+  "devDependencies": {
+    "rimraf": "^5.0.0"
   }
 }

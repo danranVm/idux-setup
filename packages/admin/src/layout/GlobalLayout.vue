@@ -1,156 +1,221 @@
 <script setup lang="ts">
-import { computed, h, onMounted, ref, shallowRef } from 'vue'
-import { type RouteRecordRaw, RouterLink, useRoute, useRouter } from 'vue-router'
+import { computed, inject, provide, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import type { NavRecord } from '@/types'
 
-import {
-  IxIcon,
-  IxLayoutSiderTrigger,
-  type MenuClickOptions,
-  useLoadingBar,
-  type MenuData,
-} from '@idux/components'
+import { IxLayoutSiderTrigger, type MenuClickOptions, type MenuData, type MenuCustomAdditional } from '@idux/components'
 import { IxProLayout } from '@idux/pro'
-import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 
-import Extra from './contents/Extra.vue'
-import LayoutSettingDrawer from './contents/LayoutSettingDrawer.vue'
+import NavItem from './components/NavItem.vue'
+import { useNavMenuData, fakeIdSuffix } from './composables/useNavMenuData'
+import { useNavShortcuts } from './composables/useNavShortcuts'
+import { useNavTabs } from './composables/useNavTabs'
+import { useOverviewData } from './composables/useOverviewData'
+import { useOverviewVisible } from './composables/useOverviewVisible'
+import { useRecentRecords } from './composables/useRecentRecords'
 import Main from './contents/Main.vue'
+import { layoutContextToken } from './context'
+import { LayoutFooter } from './layoutFooter'
+import { NavTabs } from './navTabs'
+import { Overview, OverviewTrigger } from './overview'
+import { Recents } from './recents'
+import { Shortcuts } from './shortcuts'
+import { appContextToken } from '../context'
 
-import routes from '@/router/routes/dashboard'
-import { useAppSettingStore } from '@/store/modules/appSetting'
-import { normalizePath } from '@/utils'
+import { useAppSettingStore, useNavSettingStore } from '@/store/modules'
 
-const route = useRoute()
+const { activeNavRecords, getNavRecordById } = inject(appContextToken)!
+
 const router = useRouter()
+const activeKey = computed(() => activeNavRecords.value[0]?.id)
 
-const { start, finish } = useLoadingBar()
+// const { start, finish } = useLoadingBar()
 
-router.beforeEach(() => {
-  start()
+const overviewDataContext = useOverviewData()
+const overviewVisibleContext = useOverviewVisible()
+const shortcutsContext = useNavShortcuts()
+const navTabsContext = useNavTabs()
+const recentRecords = useRecentRecords()
+
+const navMenuData = useNavMenuData()
+
+provide(layoutContextToken, {
+  recentRecords,
+  ...shortcutsContext,
+  ...navTabsContext,
+  ...overviewDataContext,
+  ...overviewVisibleContext,
 })
 
-router.afterEach(() => {
-  finish()
-})
+const { shortcutRecords } = shortcutsContext
+const { overviewVisible, setOverviewVisible } = overviewVisibleContext
 
-const activeKey = computed(() => route.path)
+// router.beforeEach(() => {
+//   start()
+// })
+
+// router.afterEach(() => {
+//   finish()
+// })
+
 const logo = {
   image: `${import.meta.env.BASE_URL}logo.svg`,
-  title: import.meta.env.VITE_APP_TITLE,
+  title: '',
   link: import.meta.env.BASE_URL,
 }
-const menus = ref<MenuData[]>([])
-const visible = shallowRef(false)
 
 const appSetting$ = useAppSettingStore()
-const { layoutTheme, layoutType, layoutCollapsed, layoutExtraInHeader } = storeToRefs(appSetting$)
+const { layoutTheme, layoutType, layoutCollapsed } = storeToRefs(appSetting$)
 const { setLayoutCollapsed } = appSetting$
+const { navOverviewEnabled, navShortcutEnabled, navTabsEnabled } = storeToRefs(useNavSettingStore())
 
-const dynamicSlotName = computed(() => (layoutExtraInHeader.value ? 'headerExtra' : 'siderFooter'))
+const logoSrc = computed(() => {
+  return layoutCollapsed.value
+    ? `${import.meta.env.BASE_URL}logo.svg`
+    : `${import.meta.env.BASE_URL}logo-text.svg`
+})
+const layoutClasses = computed(() => {
+  const layoutCls = 'global-layout'
 
-onMounted(() => {
-  menus.value = walkMenus(routes, '/')
+  return [
+    layoutCls,
+    'overflow-x-auto',
+    'min-w-page',
+    overviewVisible.value ? `${layoutCls}--overview-visible` : undefined,
+    layoutCollapsed.value ? `${layoutCls}--collapsed` : undefined,
+  ]
 })
 
-/**
- * traverse
- */
-function walkMenus(routes: RouteRecordRaw | RouteRecordRaw[], parentPath: string) {
-  let data: RouteRecordRaw[] = []
-  const dataSource: MenuData[] = []
+const shortcutsExpanded = ref<boolean>(true)
+const siderContentScrollTop = ref<number>(0)
+const siderContentScrollBottom = ref<number>(0)
 
-  if (!Array.isArray(routes)) {
-    data = [routes]
-  } else {
-    data = routes
+const shortcutsVisible = computed(
+  () =>
+    navShortcutEnabled.value &&
+    !layoutCollapsed.value &&
+    (shortcutRecords.value.length || overviewVisible.value),
+)
+const dividerClasses = computed(() => {
+  const dividerCls = 'global-layout__divider'
+
+  return {
+    [dividerCls]: true,
+    [`${dividerCls}--hidden`]: shortcutsVisible.value && shortcutsExpanded.value,
   }
-  data.forEach(item => {
-    const copy = cloneDeep(item)
-    let { path, children, meta: { title = '', icon = undefined, hidden, flattened } = {} } = copy
+})
+const siderContentClasses = computed(() => {
+  const siderContentCls = 'global-layout__sider-content'
 
-    if (hidden) return
+  return {
+    [siderContentCls]: true,
+    [`${siderContentCls}--overflow-top`]: siderContentScrollTop.value > 1,
+    [`${siderContentCls}--overflow-bottom`]: siderContentScrollBottom.value > 1,
+  }
+})
 
-    if (flattened && children) {
-      title = children[0].meta?.title ?? ''
-      icon = children[0].meta?.icon
-      path = children[0].path
-      children = undefined
+const siderCustomAdditional: MenuCustomAdditional = ({ data }) => {
+  const _opts = data as MenuData & NavRecord
+  if (_opts.menuItemCls) {
+    return {
+      class: _opts.menuItemCls,
     }
-
-    const _path = normalizePath(parentPath + '/' + path)
-
-    if (children) {
-      dataSource.push({
-        type: 'sub',
-        label: title,
-        key: _path,
-        icon,
-        customIcon: () => {
-          // 顶部导航不展示图标
-          return ['header', 'both'].includes(layoutType.value) && parentPath === '/'
-            ? null
-            : h(IxIcon, { name: icon })
-        },
-        customSuffix: ({ expanded }) => {
-          return layoutType.value !== 'both'
-            ? h(IxIcon, { name: 'right', rotate: expanded ? -90 : 90 })
-            : null
-        },
-        children: walkMenus(children, _path),
-      })
-    } else {
-      dataSource.push({
-        type: 'item',
-        label: title,
-        key: _path,
-        icon,
-        customIcon: () => {
-          return ['header', 'both'].includes(layoutType.value) && parentPath === '/'
-            ? null
-            : h(IxIcon, { name: icon })
-        },
-      })
-    }
-
-    // 导航在顶部时不展示图标
-  })
-  return dataSource
+  }
 }
 
-const onMenuClick = ({ type, key }: MenuClickOptions) => {
-  if (layoutCollapsed && type === 'item') {
-    router.push(key as string)
+const handleSiderContentScroll = (evt: Event) => {
+  const { scrollTop, scrollHeight, offsetHeight } = evt.target as HTMLElement
+
+  siderContentScrollTop.value = scrollTop
+  siderContentScrollBottom.value = scrollHeight - scrollTop - offsetHeight
+}
+const onMenuClick = ({ key, type }: MenuClickOptions) => {
+  const id = (key as string).replace(fakeIdSuffix, '')
+  const record = getNavRecordById(id)
+  if (
+    (layoutCollapsed.value && (type === 'item' || type === 'sub')) ||
+    (!layoutCollapsed.value && type === 'item')
+  ) {
+    router.push(record!.path as string)
   }
 }
 </script>
 
 <template>
   <IxProLayout
-    class="global-layout overflow-x-auto min-w-page"
+    :class="layoutClasses"
     :activeKey="activeKey"
     :logo="logo"
-    :menus="menus"
+    :menus="navMenuData"
     :theme="layoutTheme"
     :type="layoutType"
     :collapsed="layoutCollapsed"
+    :siderMenu="{ customAdditional: siderCustomAdditional }"
     @menuClick="onMenuClick"
     @update:collapsed="setLayoutCollapsed"
   >
-    <template #itemLabel="item">
-      <router-link :to="item.key">{{ item.label }}</router-link>
+    <template #logo>
+      <div class="global-layout__logo">
+        <div class="global-layout__logo__img">
+          <img :src="logoSrc" />
+        </div>
+        <IxLayoutSiderTrigger
+          v-if="!layoutCollapsed && !overviewVisible"
+          class="global-layout__collapse-trigger"
+          :icon="['right-double', 'left-double']"
+        />
+      </div>
     </template>
-    <template #[dynamicSlotName]>
-      <Extra @settingLayout="visible = true" />
-      <IxLayoutSiderTrigger v-if="!layoutExtraInHeader" />
+    <template v-if="layoutCollapsed && !overviewVisible" #siderHeader>
+      <div class="global-layout__header">
+        <IxLayoutSiderTrigger
+          class="global-layout__collapse-trigger"
+          :icon="['right-double', 'left-double']"
+        />
+      </div>
     </template>
-    <template #siderFooter v-if="layoutExtraInHeader">
-      <IxLayoutSiderTrigger />
+    <template #siderContent="menuProps">
+      <div :class="siderContentClasses">
+        <div class="global-layout__sider-content__inner" @scroll="handleSiderContentScroll">
+          <OverviewTrigger
+            v-if="navOverviewEnabled"
+            :collapsed="layoutCollapsed"
+            :overviewVisible="overviewVisible"
+            @update:overviewVisible="setOverviewVisible"
+          />
+          <Shortcuts
+            v-if="shortcutsVisible"
+            v-model:expanded="shortcutsExpanded"
+            :mode="overviewVisible ? 'flattened' : 'embeded'"
+          />
+          <div v-if="navOverviewEnabled || shortcutsVisible" :class="dividerClasses"></div>
+          <Recents v-if="!layoutCollapsed && overviewVisible" />
+          <IxMenu v-if="!overviewVisible" v-bind="menuProps">
+            <template #itemLabel="item">
+              <NavItem
+                class="layout-menu-item-label"
+                :record="item"
+                :enableOperation="!layoutCollapsed || navTabsEnabled"
+              />
+            </template>
+          </IxMenu>
+        </div>
+      </div>
     </template>
-    <Main />
-    <LayoutSettingDrawer v-model:visible="visible" />
+    <template #siderFooter>
+      <LayoutFooter />
+    </template>
+    <div class="global-layout__content">
+      <Transition name="ix-move-start" appear>
+        <Overview
+          class="global-layout__overview"
+          v-if="navOverviewEnabled"
+          v-show="overviewVisible"
+        />
+      </Transition>
+      <NavTabs v-if="navTabsEnabled" />
+      <Main />
+    </div>
   </IxProLayout>
 </template>
-<style lang="less">
-@import url('./index.less');
-</style>

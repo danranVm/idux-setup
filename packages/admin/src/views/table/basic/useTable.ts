@@ -1,7 +1,7 @@
-import { h, reactive, type Ref, ref } from 'vue'
+import { h, reactive, ref } from 'vue'
 
 import { IxIcon, IxSpace, IxTag, type TablePagination } from '@idux/components'
-import { type ProTableColumn } from '@idux/pro'
+import type { ProTableColumn } from '@idux/pro'
 import { format } from 'date-fns'
 
 export interface TableData {
@@ -33,13 +33,15 @@ export function useTable() {
     },
   })
 
-  const columns: Ref<ProTableColumn<TableData>[]> = ref([
+  const columns = ref<ProTableColumn<TableData>[]>([
     {
-      type: 'selectable',
+      key: 'dnd-sortable',
+      align: 'center',
+      width: '40px',
+      customCell: 'sortable',
     },
     {
-      type: 'indexable',
-      title: '序号',
+      type: 'selectable',
     },
     {
       title: '最近发生时间',

@@ -9,13 +9,18 @@ import { useAppSettingStore } from '@/store/modules/appSetting'
 
 const { boxQrCode, boxOnlineService, boxServicePhone } = inject(loginContextToken)!
 const { version } = storeToRefs(useAppSettingStore())
-
 </script>
 <template>
   <div class="login-box-header">
     <IxRow>
       <IxCol flex="260px" class="login-box-header-logo">
-        <img class="inline-block" width="162" height="42" src="./assets/box-header-logo.svg" alt="logo" />
+        <img
+          class="inline-block"
+          width="162"
+          height="42"
+          src="./assets/box-header-logo.svg"
+          alt="logo"
+        />
         <span class="ml-2 version">{{ version }}</span>
       </IxCol>
       <IxCol flex="auto" class="text-right">

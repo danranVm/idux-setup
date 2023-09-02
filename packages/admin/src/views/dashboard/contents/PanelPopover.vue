@@ -1,23 +1,22 @@
 <script setup lang="ts">
-import { shallowRef, watch, ref } from 'vue'
+import { shallowRef, watch, reactive } from 'vue'
 
-import { useFormControl, Validators } from '@idux/cdk'
 import type { PopoverInstance } from '@idux/components'
-import { uniqueId } from 'lodash-es'
 
 import type { DashboardPanel } from '../types'
 import { panelSortFn } from '../utils'
 
 const props = defineProps<{
-  loading: boolean
-  offset: number
   panels: DashboardPanel[]
 }>()
 const emits = defineEmits<{
-  (e: 'edit', panel: { key?: string; title: string }): void
-  (e: 'delete', key: string): void
+  (e: 'edit', panel: DashboardPanel): void
+  (e: 'delete', panel: DashboardPanel): void
+  (e: 'updateShow', panel: DashboardPanel): void
 }>()
 
+const visible = shallowRef(false)
+const popoverVisibleMap = reactive<Record<string, boolean>>({})
 const popoverRef = shallowRef<PopoverInstance>()
 const defaultPanels = shallowRef<DashboardPanel[]>([])
 const customPanels = shallowRef<DashboardPanel[]>([])
@@ -37,150 +36,127 @@ watch(
 
     defaultPanels.value = currDefaultPanels.sort(panelSortFn)
     customPanels.value = currCustomPanels.sort(panelSortFn)
+    popoverRef.value?.updatePopper()
   },
   { immediate: true },
 )
 
-watch(
-  () => props.offset,
-  () => popoverRef.value?.updatePopper(),
-)
-
-const editingKey = ref<string>('')
-const editingControl = useFormControl('', [Validators.required, Validators.maxLength(24)])
-
-// 生成临时 key 的前缀，保证唯一性，可以用于区分是编辑还是新增
-const addKeyPrefix = '__Dashboard_panel'
-const onAdd = () => {
-  // 生成一个随机的临时 key
-  const newKey = uniqueId(addKeyPrefix)
-  customPanels.value = [...customPanels.value, { key: newKey, title: '' }]
-  editingKey.value = newKey
-  editingControl.reset()
-}
-
-const onEdit = (panel: DashboardPanel) => {
-  editingKey.value = panel.key
-  editingControl.setValue(panel.title)
-}
-
-const onEditEnd = () => {
-  if (!editingControl.valid.value) {
-    editingControl.markAsDirty()
-    return
-  }
-
-  const currKey = editingKey.value
+const onAdd = (panel?: DashboardPanel) => {
+  const { key, title, ...restPanel } = panel || {}
   emits('edit', {
-    key: currKey.startsWith(addKeyPrefix) ? undefined : currKey,
-    title: editingControl.getValue(),
-  })
-
-  editingKey.value = ''
-  editingControl.reset()
+    ...restPanel,
+    title: title ? `${title}副本` : '',
+    type: 'custom',
+  } as DashboardPanel)
+  visible.value = false
 }
-
-const onDelete = (key: string) => {
-  emits('delete', key)
+const onEdit = (panel?: DashboardPanel) => {
+  emits('edit', panel)
+  visible.value = false
 }
+const onDelete = (panel: DashboardPanel) => emits('delete', panel)
+const onUpdateShow = (panel: DashboardPanel) => emits('updateShow', panel)
 </script>
 
 <template>
   <IxPopover
     ref="popoverRef"
+    v-model:visible="visible"
     closable
     :header="{ size: 'md', title: '管理看板' }"
     placement="bottomStart"
     trigger="click"
   >
-    <span class="panel-trigger" :style="{ left: `${offset}px` }">
-      <IxIcon name="setting"></IxIcon>
+    <span class="panel-trigger">
+      <IxIcon name="setting" :size="16"></IxIcon>
     </span>
     <template #content>
-      <IxSpin :spinning="loading">
-        <div class="panel-default">
-          <IxHeader size="xs" :title="'默认看板'"></IxHeader>
-          <IxRow :gutter="12">
-            <IxCol v-for="panel of defaultPanels" :key="panel.key" :span="12">
-              <div class="panel-item">
-                <div class="panel-item-title">
-                  <IxCheckbox :key="panel.key" :checked="panel.isShow">
-                    {{ panel.title }}
-                  </IxCheckbox>
-                  <IxButtonGroup mode="link" :gap="16">
-                    <IxButton>创建副本</IxButton>
-                    <IxButton>预览</IxButton>
-                  </IxButtonGroup>
-                </div>
-                <div class="panel-item-description" v-if="panel.description">
-                  {{ panel.description }}
-                </div>
-              </div>
-            </IxCol>
-          </IxRow>
-        </div>
-        <div class="panel-custom">
-          <IxHeader size="xs">
-            <span>
-              自定义面板
-              <span>({{ customPanels.length + 1 }}/5)</span>
-            </span>
-          </IxHeader>
-          <IxRow :gutter="12">
-            <IxCol v-for="panel of customPanels" :key="panel.key" :span="12">
-              <div class="panel-item">
-                <div class="panel-item-title" v-if="panel.key !== editingKey">
-                  <span>{{ panel.title }}</span>
-                  <IxButtonGroup mode="link" :gap="16">
-                    <IxButton @click="onEdit">编辑</IxButton>
-                    <IxPopconfirm
-                      :title="`确定要删除 【${panel.title}】 吗?`"
-                      content="删除后, 将无法恢复"
-                      trigger="click"
-                      :overlayContainer="element => element?.parentElement"
-                      @ok="onDelete(panel.key)"
-                    >
-                      <IxButton>删除</IxButton>
-                    </IxPopconfirm>
-                  </IxButtonGroup>
-                </div>
-                <IxFormItem v-else messageTooltip>
-                  <IxInput
-                    autofocus
-                    :control="editingControl"
-                    @blur="onEditEnd"
-                    @keyup.enter="onEditEnd"
-                  >
-                  </IxInput>
-                </IxFormItem>
-              </div>
-            </IxCol>
-            <IxCol :span="12">
-              <div class="panel-item">
-                <IxButton
-                  :disabled="customPanels.length >= 5"
-                  icon="plus"
-                  mode="text"
-                  @click="onAdd"
+      <div class="panel-default">
+        <IxHeader size="xs" :title="'默认看板'"></IxHeader>
+        <IxRow :gutter="12">
+          <IxCol v-for="panel of defaultPanels" :key="panel.key" :span="12">
+            <div class="panel-item">
+              <div class="panel-item-title">
+                <IxCheckbox
+                  :key="panel.key"
+                  :checked="panel.isShow"
+                  @update:checked="onUpdateShow(panel)"
                 >
-                  新增自定义面板
-                </IxButton>
+                  {{ panel.title }}
+                </IxCheckbox>
+                <IxButtonGroup mode="link" :gap="16">
+                  <IxButton :disabled="customPanels.length >= 5" @click="onAdd(panel)">
+                    创建副本
+                  </IxButton>
+                  <!-- <IxButton>预览</IxButton> -->
+                </IxButtonGroup>
               </div>
-            </IxCol>
-          </IxRow>
-        </div>
-      </IxSpin>
+              <div class="panel-item-description" v-if="panel.description">
+                {{ panel.description }}
+              </div>
+            </div>
+          </IxCol>
+        </IxRow>
+      </div>
+      <div class="panel-custom">
+        <IxHeader size="xs">
+          <span>
+            自定义面板
+            <span class="panel-custom-count">({{ customPanels.length }}/5)</span>
+          </span>
+        </IxHeader>
+        <IxRow :gutter="12">
+          <IxCol v-for="panel of customPanels" :key="panel.key" :span="12">
+            <div class="panel-item">
+              <div class="panel-item-title">
+                <span>{{ panel.title }}</span>
+                <IxButtonGroup
+                  :class="popoverVisibleMap[panel.key] ? 'visible' : ''"
+                  mode="link"
+                  :gap="16"
+                >
+                  <IxButton @click="onEdit(panel)">编辑</IxButton>
+                  <IxPopconfirm
+                    v-model:visible="popoverVisibleMap[panel.key]"
+                    :title="`确定要删除 【${panel.title}】 吗?`"
+                    content="删除后, 将无法恢复"
+                    trigger="click"
+                    :overlayContainer="() => popoverRef.value"
+                    @ok="onDelete(panel)"
+                  >
+                    <IxButton>删除</IxButton>
+                  </IxPopconfirm>
+                </IxButtonGroup>
+              </div>
+            </div>
+          </IxCol>
+          <IxCol :span="12">
+            <div
+              :class="['panel-item', customPanels.length >= 5 ? 'disabled' : '']"
+              style="padding: 0; line-height: 1"
+            >
+              <IxButton
+                style="padding: 12px"
+                :disabled="customPanels.length >= 5"
+                block
+                icon="plus"
+                mode="text"
+                @click="onAdd"
+              >
+                新增自定义面板
+              </IxButton>
+            </div>
+          </IxCol>
+        </IxRow>
+      </div>
     </template>
   </IxPopover>
 </template>
 
 <style scoped lang="less">
 .panel-trigger {
-  position: absolute;
-  top: 12px;
   padding: 4px;
-  cursor: pointer;
-  z-index: 1;
+  line-height: 1;
 
   &:hover {
     color: var(--ix-color-primary);
@@ -191,10 +167,11 @@ const onDelete = (key: string) => {
 .panel-item {
   padding: 12px;
   border: 1px solid var(--ix-border-color);
+  border-radius: 2px;
 
-  &:hover {
+  &:not(.disabled):hover {
     border-color: var(--ix-color-primary);
-    .ix-button-group {
+    .ix-button-group:not(.visible) {
       visibility: visible;
     }
   }
@@ -203,21 +180,32 @@ const onDelete = (key: string) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    > label,
+    > span {
+      color: var(--ix-text-color-title);
+      font-weight: var(--ix-font-weight-xl);
+    }
   }
 
   &-description {
     margin-left: 20px;
   }
 
-  .ix-button-group {
+  .ix-button-group:not(.visible) {
     visibility: hidden;
   }
 }
 
 .panel-default,
 .panel-custom {
-  padding: 0 12px;
+  padding: 0 12px 12px;
   width: 616px;
+}
+
+.panel-custom-count {
+  color: var(--ix-text-color-info);
+  font-weight: var(--ix-font-weight-md);
 }
 
 .ix-header-xs {

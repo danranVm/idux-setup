@@ -5,7 +5,6 @@ import { RequestCanceler } from './requestCanceler'
 
 import { Message } from '@/plugins/idux'
 
-
 const canceler = new RequestCanceler()
 
 const axios = Axios.create({

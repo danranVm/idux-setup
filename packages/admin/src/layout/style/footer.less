@@ -1,0 +1,126 @@
+.global-layout__footer {
+  width: 100%;
+  position: relative;
+
+  &__opers {
+    padding: 0 8px;
+    height: 36px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__oper-item {
+    color: #979797;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &__icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #979797;
+    }
+    &__suffix {
+      margin-left: auto;
+    }
+  }
+
+  &__collapsed-menu {
+    padding: 8px;
+    background-color: #1e232b;
+    &-trigger {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      cursor: pointer;
+      &:hover {
+        .nav-item-hover();
+      }
+    }
+
+    .global-layout__footer__oper-item {
+      height: 32px;
+      padding: 0 8px 0 0;
+      &:hover {
+        .nav-item-hover();
+        .global-layout__footer__oper-item__icon {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  &__menu-alarm-count {
+    font-size: 8px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 50%;
+    background-color: #454c59;
+    color: #edf1f7;
+  }
+
+  &__user-menu {
+    padding: 8px;
+    background-color: #1e232b;
+    &__item {
+      height: 32px;
+      min-width: 120px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      color: #bec3cc;
+      cursor: pointer;
+      &:hover {
+        .nav-item-hover();
+        color: #fff;
+      }
+    }
+  }
+
+  &__dropdown-reference {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 0;
+    height: 0;
+  }
+
+  &__user {
+    height: 36px;
+    width: 100%;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    cursor: pointer;
+
+    &__label {
+      margin-left: 8px;
+      font-size: 12px;
+    }
+    &__suffix {
+      margin-left: auto;
+      font-size: 16px;
+    }
+  }
+
+  .global-layout--collapsed & {
+    &__opers {
+      padding: 0;
+    }
+    &__user {
+      padding: 0;
+      justify-content: center;
+      &:hover {
+        .nav-item-hover();
+      }
+    }
+  }
+}

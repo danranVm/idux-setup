@@ -4,6 +4,14 @@
   "exclude": ["packages/**/__tests__/*", "packages/**/*.config.ts", "packages/**/*.config.js"],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": [
+      "ES2022",
+
+      "DOM",
+      "DOM.Iterable"
+
+      // No `ScriptHost` because Vue 3 dropped support for IE
+    ]
   }
 }

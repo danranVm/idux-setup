@@ -1,47 +1,46 @@
-import { onMounted, shallowRef } from 'vue'
+import { onMounted, shallowRef, type ShallowRef } from 'vue'
 
-import { isNil, uniqueId } from 'lodash-es'
+import { uniqueId } from 'lodash-es'
 
 import type { DashboardPanel } from '../types'
 
 let defaultPanels: DashboardPanel[] = [
   {
     key: '1',
+    type: 'default',
     title: '运营全景',
     description: '这里是简介，这里是简介，这里是简介',
-    type: 'default',
     isShow: true,
     order: 1,
   },
   {
     key: '2',
+    type: 'default',
     title: '主机安全',
     description: '这里是简介，这里是简介，这里是简介',
-    type: 'default',
     isShow: false,
     order: 2,
   },
-
   {
     key: '10',
-    title: '自定义面板',
     type: 'custom',
-    isShow: false,
+    title: '自定义面板',
+    isShow: true,
     order: 3,
   },
 ]
 
 export function usePanels(): {
   panels: ShallowRef<DashboardPanel[]>
-  loadPanels: () => DashboardPanel[]
-  savePanel: (panel: DashboardPanel) => void
+  loading: ShallowRef<boolean>
+  savePanel: (panel: DashboardPanel) => string
   deletePanel: (key: string) => void
 } {
   const panels = shallowRef<DashboardPanel[]>([])
   const loading = shallowRef(false)
 
   // 初始化数据。
-  const loadPanels = (): DashboardPanel[] => {
+  const loadPanels = () => {
     loading.value = true
     setTimeout(() => {
       panels.value = [...defaultPanels]
@@ -51,15 +50,16 @@ export function usePanels(): {
 
   // 保存数据。
   const savePanel = (panel: DashboardPanel) => {
+    let currKey = panel.key
     // 没有 key 代表新增
-    if (isNil(panel.key)) {
+    if (!currKey) {
       // 新增接口, 默认后端生成新的key
-      let newKey = uniqueId()
-      while (defaultPanels.find(item => item.key === newKey)) {
-        newKey = uniqueId()
+      currKey = uniqueId()
+      while (defaultPanels.find(item => item.key === currKey)) {
+        currKey = uniqueId()
       }
       defaultPanels.push({
-        key: newKey,
+        key: currKey,
         title: panel.title,
         type: 'custom',
         isShow: true,
@@ -67,11 +67,17 @@ export function usePanels(): {
       })
     } else {
       // 编辑接口
-      const currPanel = defaultPanels.find(item => item.key === panel.key)
-      defaultPanels.push({ ...currPanel, ...panel })
+      defaultPanels = defaultPanels.map(item => {
+        if (item.key === panel.key) {
+          return { ...item, ...panel }
+        }
+        return item
+      })
     }
 
     loadPanels()
+
+    return currKey
   }
 
   const deletePanel = (key: string) => {
@@ -85,7 +91,6 @@ export function usePanels(): {
   return {
     panels,
     loading,
-    loadPanels,
     savePanel,
     deletePanel,
   }

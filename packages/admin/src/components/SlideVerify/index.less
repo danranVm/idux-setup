@@ -1,0 +1,138 @@
+.slide-verify {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 366px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.16), rgba(33, 33, 33, 0.5) 0 0 0 5000px;
+  border-radius: 4px;
+
+  &-wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #2f3540;
+    line-height: 16px;
+    font-weight: 400;
+
+    .title-icon {
+      font-size: 20px;
+    }
+  }
+
+  &-body {
+    position: relative;
+    width: 100%;
+    margin: 24px 0 12px;
+
+    .draggable-canvas {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .body-tip {
+      position: absolute;
+      width: 100%;
+      height: 32px;
+      bottom: 0;
+      padding-left: 14px;
+      line-height: 32px;
+      color: #fff;
+
+      &.succeed {
+        background-color: rgba(57, 195, 23, 0.6);
+      }
+
+      &.failing {
+        background-color: rgba(245, 39, 39, 0.6);
+      }
+    }
+  }
+
+  &-slide {
+    position: relative;
+    padding: 9px 0;
+
+    .slide-bg {
+      height: 14px;
+      background: #e9e9e9;
+      border-radius: 14px;
+    }
+
+    .slide-block {
+      position: absolute;
+      top: 0;
+      width: 54px;
+      height: 32px;
+      padding-top: 6px;
+      background-image: linear-gradient(180deg, #66a0ee 0%, #3667d9 100%);
+      box-shadow: 0 1px 5px 0 #92b2fd;
+      border-radius: 15px;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      .arrows-icon {
+        font-size: 18px;
+        color: #fff;
+        margin-left: 15px;
+        opacity: 0.8;
+
+        &-right {
+          margin-left: -12px;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &-opr {
+    margin-top: 14px;
+
+    .refresh-icon {
+      float: right;
+      font-size: 18px;
+    }
+  }
+
+  &-mask {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.3);
+
+    .mask-img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .opr-icon {
+    cursor: pointer;
+    color: #c2c2c2;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #2f3540;
+    }
+  }
+}
